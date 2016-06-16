@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MMA API</title>
+</head>
+<body>
+<div>
+    <div>
+        Hello and welcome to the MMA API.
+        There are currently {{ fighters }} fighters and {{ fights }} fights in the database.
+        This page will explain how to access the different endpoints.
+    </div>
+<br>
+    <div>
+        To retrieve a list of all fighters or all fights simply go to the /fighter/ or /fight/ endpoint.
+        To find a fighter by name append a querystring to the /fightername/ endpoint and use underscores for spaces.
+        For example /fightername/?name=chris_camozzi. Result are returned most recent first.
+    </div>
+<br>
+    <div>
+        Additional fights and filters will be added soon.
+
+
+    </div>
+
+</div>
+</body>
+</html>

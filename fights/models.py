@@ -5,6 +5,12 @@ class Fighter(models.Model):
     # Later add bio data and overall meta stats
     name = models.CharField(max_length=255)
 
+    @property
+    def weights(self):
+        bouts = self.fight_set.all()
+        weight_classes = [x.weight for x in bouts]
+        return set(weight_classes)
+
     def __str__(self):
         return self.name
 
