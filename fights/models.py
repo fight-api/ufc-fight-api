@@ -1,5 +1,12 @@
 from django.db import models
 
+"""
+New plan, get all ufc fights and store profile page for each fighter.
+Then scrape each profile page and create fighter objects.
+
+
+
+"""
 
 class Fighter(models.Model):
     # Later add bio data and overall meta stats
