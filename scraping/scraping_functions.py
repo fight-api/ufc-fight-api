@@ -2,6 +2,10 @@ from bs4 import BeautifulSoup
 import requests
 import json
 
+from fights.helper_functions import create_fighter_from_dict, \
+    create_fight_from_dict
+from fights.models import Fighter
+
 missed_events = [
     '/events/UFC-176-Aldo-vs-Mendes-2-37609',
     '/events/UFC-151-Jones-vs-Henderson-25809'
@@ -57,7 +61,7 @@ def scrape_page(url):
     Returns a list of fight dicts.
     """
     r = requests.get('http://www.sherdog.com' + url)
-    soup = BeautifulSoup(r.content)
+    soup = BeautifulSoup(r.content, "html.parser")
     sub_fights = soup.find_all('tr', itemprop="subEvent")
     headliner = soup.find("div", class_="fight")
     resume = soup.find('table', class_='resume')
@@ -153,6 +157,53 @@ def scrape_fighter_page(url):
         obj["camp"] = camp.find("span", itemprop="name").text
 
     return obj
+
+
+def check_fighter_urls(dicts):
+    """
+    Takes a list of fight dicts and grabs the winner and loser urls. Then
+    returns any that are not in the database.
+    """
+
+    winners = [x["winner_url"] for x in dicts]
+    losers = [x["loser_url"] for x in dicts]
+    urls = winners + losers
+
+    missing = [
+        url for url in urls
+        if not Fighter.objects.filter(sherdog_url=url).first()
+        ]
+    return missing
+
+
+def add_fighter_from_url(url):
+    """
+    Scrape data from a fighter page and load it into the database and create
+    a Fighter object with it.
+    """
+    data = scrape_fighter_page(url)
+    create_fighter_from_dict(data)
+
+
+def scrape_event_page(url):
+    """
+    url is a Sherdog UFC event page. This function will add any fighters not
+    already in the database and then load all new fights in.
+    """
+
+    fight_results = scrape_page(url)
+    missing_fighter_urls = check_fighter_urls(fight_results)
+
+    if missing_fighter_urls:
+        [add_fighter_from_url(x) for x in missing_fighter_urls]
+
+    [create_fight_from_dict(x) for x in fight_results]
+
+    return "Database updated"
+
+
+
+
 
 
 

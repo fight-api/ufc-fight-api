@@ -36,18 +36,3 @@ def create_fight_from_dict(d):
     )
 
 
-
-# winner = models.ForeignKey(Fighter, null=True, blank=True,
-#                            related_name="winning")
-# winner_name = models.CharField(max_length=255)
-# winner_url = models.CharField(max_length=255)
-#
-# loser = models.ForeignKey(Fighter, null=True, blank=True,
-#                           related_name="losing")
-# loser_name = models.CharField(max_length=255)
-# loser_url = models.CharField(max_length=255)
-#
-# method = models.CharField(max_length=255)
-# referee = models.CharField(max_length=255)
-# round = models.CharField(max_length=255)
-# time = models.CharField(max_length=255)
