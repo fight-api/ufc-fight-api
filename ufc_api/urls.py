@@ -16,18 +16,17 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 
-from fights.views import FighterListCreate, FighterDetail, FightListCreate, \
-    FightDetail, FighterByName, SearchPage
+#from fights.views import FighterListCreate, FighterDetail, FightListCreate, \
+#    FightDetail, FighterByName, SearchPage
 
 urlpatterns = [
-    url(r'^fighter/$', FighterListCreate.as_view(), name="fighter_list"),
-    url(r'^fighter/(?P<pk>\d+)/$', FighterDetail.as_view(),
-        name="fighter_detail"),
-    url(r'^fight/$', FightListCreate.as_view(), name="fight_list"),
-    url(r'^fight/(?P<pk>\d+)/$', FightDetail.as_view(),
-        name="fight_detail"),
-    url(r'^fightername/$', FighterByName.as_view(), name="fighter_name"),
+    # url(r'^fighter/$', FighterListCreate.as_view(), name="fighter_list"),
+    # url(r'^fighter/(?P<pk>\d+)/$', FighterDetail.as_view(),
+    #     name="fighter_detail"),
+    # url(r'^fight/$', FightListCreate.as_view(), name="fight_list"),
+    # url(r'^fight/(?P<pk>\d+)/$', FightDetail.as_view(),
+    #     name="fight_detail"),
+    # url(r'^fightername/$', FighterByName.as_view(), name="fighter_name"),
     url(r'^admin/', admin.site.urls),
-    url(r'^$', SearchPage.as_view(), name="landing_page"),
 
 ]

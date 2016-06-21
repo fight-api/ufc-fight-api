@@ -90,7 +90,7 @@ WSGI_APPLICATION = 'ufc_api.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'ufc_api',
+        'NAME': 'mma_api',
         'USER': '',
         'PASSWORD': '',
         'HOST': '',

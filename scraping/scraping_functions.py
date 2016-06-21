@@ -6,6 +6,10 @@ missed_events = [
     '/events/UFC-176-Aldo-vs-Mendes-2-37609',
     '/events/UFC-151-Jones-vs-Henderson-25809'
 ]
+missed_fighter = [
+    '/fighter/Noad-Lahat-35732',
+    '/fighter/Mirsad-Bektic-59766'
+]
 
 
 def capture_sub_fights(fights):
@@ -111,25 +115,45 @@ def update_reviews(results):
     save_reviews(older, "w")
 
 
+def all_fighter_urls():
+    loaded = load_reviews()
+    winners = [x["winner_url"] for x in loaded]
+    losers = [x["loser_url"] for x in loaded]
+    return list(set(winners+losers))
+
+
 def scrape_fighter_page(url):
     obj = {}
     r = requests.get("http://www.sherdog.com" + url)
     soup = BeautifulSoup(r.content)
     bio = soup.find('div', class_="module bio_fighter vcard")
-    names = bio.find(itemprop="name")
+    names = bio.find(itemprop="name").find_all("span")
 
-    obj["name"] = names.find_all("span")[0].text
-    obj["nickname"] = names.find_all("span")[1].text
+    obj["name"] = names[0].text
+    if len(names) > 1:
+        obj["nickname"] = names[1].text
+
     obj["url"] = url
     obj["birthday"] = bio.find('span', itemprop="birthDate").text
     obj["height"] = bio.find('span', class_="item height").find("strong").text
     obj["weight"] = bio.find('span', class_="item weight").find("strong").text
-    obj["location"] = bio.find(
-        'span', itemprop="addressLocality", class_="locality").text
-    obj["country"] = bio.find('strong', itemprop="nationality").text
-    obj["camp"] = bio.find('span', itemprop="memberOf").find(
-        "span", itemprop="name").text
+
+    location = bio.find(
+        'span', itemprop="addressLocality", class_="locality")
+    if location:
+
+        obj["location"] = location.text
+
+    country = bio.find('strong', itemprop="nationality")
+    if country:
+        obj["country"] = country.text
+
+    camp = bio.find('span', itemprop="memberOf")
+    if camp:
+        obj["camp"] = camp.find("span", itemprop="name").text
+
     return obj
+
 
 
 if __name__ == '__main__':
@@ -138,4 +162,4 @@ if __name__ == '__main__':
     #all_events = all_event_urls(events_url)
     #current_urls = all_events[14:-1]
 
-    #data = scrape_multiple_pages(current_urls)
+
