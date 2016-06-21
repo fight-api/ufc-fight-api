@@ -2,62 +2,60 @@ from django.shortcuts import render
 from django.views.generic import ListView, DetailView
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from django.db.models import Count
 
-#from fights.models import Fighter, Fight
-#from fights.serializers import FighterSerializer, FightSerializer
-#
-#
-# class FighterListCreate(generics.ListCreateAPIView):
-#     queryset = Fighter.objects.all()
-#     serializer_class = FighterSerializer
-#     #permission_classes = (IsAuthenticatedOrReadOnly,)
-#
-#
-# class FighterDetail(generics.RetrieveUpdateDestroyAPIView):
-#     queryset = Fighter.objects.all()
-#     serializer_class = FighterSerializer
-#     #permission_classes = (IsAuthenticatedOrReadOnly,)
-#
-#
-# class FightListCreate(generics.ListCreateAPIView):
-#     queryset = Fight.objects.all()
-#     serializer_class = FightSerializer
-#
-#
-# class FightDetail(generics.RetrieveUpdateDestroyAPIView):
-#     queryset = Fight.objects.all()
-#     serializer_class = FightSerializer
-#
-#
-# class FighterByName(generics.ListAPIView):
-#     """
-#     Expects a full fighter name to be sent in as a query string with
-#     underscores between words.
-#
-#     Example: fightername/?name=joe_smith
-#     """
-#
-#     serializer_class = FightSerializer
-#
-#     def get_queryset(self):
-#
-#         name = self.request.query_params.get('name')
-#
-#         if name:
-#             uppered = [x.capitalize() for x in name.split('_')]
-#             cleaned_name = " ".join(uppered)
-#             fighter = Fighter.objects.get(name=cleaned_name)
-#             qs = Fight.objects.filter(fighter=fighter)
-#             return qs.order_by("-date")
-#         else:
-#             return []
-#
-#
-# class FightFilter(generics.ListAPIView):
-#     serializer_class = FightSerializer
-#
-#     def get_queryset(self):
-#         return super().get_queryset()
+from fights.models import Fighter, Fight
+from fights.serializers import FighterSerializer, FightSerializer
+
+
+class FighterList(generics.ListAPIView):
+    #queryset = Fighter.objects.all().order_by("name")
+    serializer_class = FighterSerializer
+
+    def get_queryset(self):
+        name = self.request.query_params.get('name')
+        if name:
+            uppered = [x.capitalize() for x in name.split('_')]
+            cleaned_name = " ".join(uppered)
+            qs = Fighter.objects.filter(name=cleaned_name).all()
+            return qs
+        else:
+            return Fighter.objects.all().order_by("name")
+
+
+class FighterDetail(generics.RetrieveAPIView):
+    queryset = Fighter.objects.all()
+    serializer_class = FighterSerializer
+
+
+class FightList(generics.ListAPIView):
+    queryset = Fight.objects.all()
+    serializer_class = FightSerializer
+
+
+class FightDetail(generics.RetrieveAPIView):
+    queryset = Fight.objects.all()
+    serializer_class = FightSerializer
+
+
+class RefereeSummary(APIView):
+
+    def get(self, request, format=None):
+        data = Fight.objects.values("referee").annotate(
+            number=Count("pk")).order_by("-number")
+        return Response(data)
+
+
+class FinishSummary(APIView):
+    def get(self, request, format=None):
+        data = Fight.objects.values("method").annotate(
+            number=Count("pk")).order_by("-number")
+
+        return Response(data)
+
+
 #
 #
 # class SearchPage(ListView):

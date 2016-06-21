@@ -14,18 +14,34 @@ class Fighter(models.Model):
     nickname = models.CharField(max_length=255, null=True, blank=True)
     camp = models.CharField(max_length=255, null=True, blank=True)
 
+    @property
+    def fight_count(self):
+        return self.winners.count() + self.losers.count()
+
+    @property
+    def decision_rate(self):
+        decisions = self.winners.filter(
+            method__icontains="Decision").count() + self.losers.filter(
+            method__icontains="Decision"
+        ).count()
+        return decisions / self.fight_count
+
+    @property
+    def finish_rate(self):
+        return 1 - self.decision_rate
+
     def __str__(self):
         return self.name
 
 
 class Fight(models.Model):
     winner = models.ForeignKey(Fighter, null=True, blank=True,
-                               related_name="winning")
+                               related_name="winners")
     winner_name = models.CharField(max_length=255)
     winner_url = models.CharField(max_length=255)
 
     loser = models.ForeignKey(Fighter, null=True, blank=True,
-                              related_name="losing")
+                              related_name="losers")
     loser_name = models.CharField(max_length=255)
     loser_url = models.CharField(max_length=255)
 
@@ -36,13 +52,3 @@ class Fight(models.Model):
 
     def __str__(self):
         return "{} defeated {}".format(self.winner_name, self.loser_name)
-
-
-# x={'loser_name': 'Urijah Faber',
-#  'loser_url': '/fighter/Urijah-Faber-8847',
-#  'method': 'Decision (Unanimous)',
-#  'referee': 'Herb Dean',
-#  'round': '5',
-#  'time': '5:00',
-#  'winner_name': 'Dominick Cruz',
-#  'winner_url': '/fighter/Dominick-Cruz-12107'}
