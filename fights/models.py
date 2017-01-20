@@ -34,6 +34,14 @@ class Fighter(models.Model):
         return self.name
 
 
+class Event(models.Model):
+    title = models.CharField(max_length=255)
+    organization = models.CharField(max_length=255)
+    date_string = models.CharField(max_length=50)
+    location = models.CharField(max_length=255)
+    sherdog_url = models.CharField(max_length=255, null=True, blank=True)
+
+
 class Fight(models.Model):
     winner = models.ForeignKey(Fighter, null=True, blank=True,
                                related_name="winners")
@@ -45,6 +53,7 @@ class Fight(models.Model):
     loser_name = models.CharField(max_length=255)
     loser_url = models.CharField(max_length=255)
 
+    event = models.ForeignKey(Event, null=True, blank=True)
     method = models.CharField(max_length=255)
     referee = models.CharField(max_length=255)
     round = models.CharField(max_length=255)
@@ -52,10 +61,3 @@ class Fight(models.Model):
 
     def __str__(self):
         return "{} defeated {}".format(self.winner_name, self.loser_name)
-
-
-class Event(models.Model):
-    title = models.CharField(max_length=255)
-    organization = models.CharField(max_length=255)
-    date_string = models.CharField(max_length=50)
-    location = models.CharField(max_length=255)
