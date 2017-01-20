@@ -52,3 +52,10 @@ class Fight(models.Model):
 
     def __str__(self):
         return "{} defeated {}".format(self.winner_name, self.loser_name)
+
+
+class Event(models.Model):
+    title = models.CharField(max_length=255)
+    organization = models.CharField(max_length=255)
+    date_string = models.CharField(max_length=50)
+    location = models.CharField(max_length=255)
