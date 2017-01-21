@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from fights.models import Fighter, Fight
+from fights.models import Fighter, Fight, Event
 
 
 @admin.register(Fighter)
@@ -17,3 +17,7 @@ class FightAdmin(admin.ModelAdmin):
                     "referee")
 
     search_fields = ["winner__name"]
+
+@admin.register(Event)
+class EventAdmin(admin.ModelAdmin):
+    list_display = [field.name for field in Event._meta.fields]
