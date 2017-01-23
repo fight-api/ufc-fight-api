@@ -42,6 +42,9 @@ class Event(models.Model):
     sherdog_url = models.CharField(max_length=255, null=True, blank=True,
                                    unique=True)
 
+    def __str__(self):
+        return self.title
+
 
 class Fight(models.Model):
     winner = models.ForeignKey(Fighter, null=True, blank=True,
