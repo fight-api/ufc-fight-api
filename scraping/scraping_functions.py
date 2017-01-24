@@ -7,6 +7,11 @@ class FighterHandler:
     def __init__(self):
         self.base_url = "http://www.sherdog.com"
 
+    def name_from_url(self, url):
+        name_section = url.split('/')[-1]
+        names = name_section.split('-')[:-1]
+        return ' '.join(names)
+
     def scrape_fighter_page(self, url):
         obj = {}
         r = requests.get(self.base_url + url)
@@ -17,7 +22,7 @@ class FighterHandler:
         if names:
             obj["name"] = names[0].text
         else:
-            obj['name'] = 'n/a'
+            obj['name'] = self.name_from_url(url)
 
         if len(names) > 1:
             obj["nickname"] = names[1].text
