@@ -63,5 +63,8 @@ class Fight(models.Model):
     round = models.CharField(max_length=255)
     time = models.CharField(max_length=255)
 
+    class Meta:
+        unique_together = ('winner', 'loser', 'event')
+
     def __str__(self):
         return "{} defeated {}".format(self.winner_name, self.loser_name)
