@@ -52,22 +52,21 @@ class FighterHandler:
     def create_fighter_from_dict(self, d):
 
         fighter = Fighter.objects.create(name=d["name"],
-                               birthday=d["birthday"],
-                               height=d["height"],
-                               weight=d["weight"],
-                               sherdog_url=d["url"],
-
-                               nickname=d.get("nickname"),
-                               location=d.get("location"),
-                               country=d.get("country"),
-                               camp=d.get("camp")
-                               )
+                                         birthday=d["birthday"],
+                                         height=d["height"],
+                                         weight=d["weight"],
+                                         sherdog_url=d["url"],
+                                         nickname=d.get("nickname"),
+                                         location=d.get("location"),
+                                         country=d.get("country"),
+                                         camp=d.get("camp")
+                                         )
         return fighter
 
     def add_fighter_from_url(self, url):
         """
-        Scrape data from a fighter page and load it into the database and create
-        a Fighter object with it.
+        Scrape data from a fighter page and load it into the database and
+         create a Fighter object with it.
         """
         data = self.scrape_fighter_page(url)
         return self.create_fighter_from_dict(data)
@@ -80,8 +79,6 @@ class FighterHandler:
         if not fighter:
             fighter = self.add_fighter_from_url(fighter_url)
         return fighter
-
-
 
 
 class FightHandler:
@@ -191,14 +188,9 @@ class FightHandler:
         """
         Takes an event url. Scrapes all fights and adds them to the database.
         """
-
-        # TODO: Add logging for scraping and data loading errors.
-
         fight_dicts = self.scrape_fights(url)
         for fd in fight_dicts:
             self.create_fight_from_dict(fd)
-
-
 
 
 class EventHandler:
@@ -218,20 +210,19 @@ class EventHandler:
         organization = items[1].text
         start_date = soup.find('meta', itemprop='startDate').text
         location = soup.find('span', itemprop='location').text
-        event, created = Event.objects.update_or_create(title=title,
-                                     organization=organization,
-                                     date_string=start_date,
-                                     location=location,
-                                     sherdog_url=url)
+        event, created = Event.objects.update_or_create(
+            title=title,
+            organization=organization,
+            date_string=start_date,
+            location=location,
+            sherdog_url=url)
         return event
-
 
 
 class SherdogEvents:
     def __init__(self):
         self.event_overview_url = 'http://www.sherdog.com/organizations/Ultimate-Fighting-Championship-2'
         self.fight_handler = FightHandler()
-
 
     def recent_event_urls(self):
         """
