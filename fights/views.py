@@ -11,18 +11,18 @@ from fights.serializers import FighterSerializer, FightSerializer
 
 
 class FighterList(generics.ListAPIView):
-    #queryset = Fighter.objects.all().order_by("name")
+    #queryset = Fighter.objects.all().order_by('name')
     serializer_class = FighterSerializer
 
     def get_queryset(self):
         name = self.request.query_params.get('name')
         if name:
             uppered = [x.capitalize() for x in name.split('_')]
-            cleaned_name = " ".join(uppered)
+            cleaned_name = ' '.join(uppered)
             qs = Fighter.objects.filter(name=cleaned_name).all()
             return qs
         else:
-            return Fighter.objects.all().order_by("name")
+            return Fighter.objects.all().order_by('name')
 
 
 class FighterDetail(generics.RetrieveAPIView):
@@ -43,15 +43,15 @@ class FightDetail(generics.RetrieveAPIView):
 class RefereeSummary(APIView):
 
     def get(self, request, format=None):
-        data = Fight.objects.values("referee").annotate(
-            number=Count("pk")).order_by("-number")
+        data = Fight.objects.values('referee').annotate(
+            number=Count('pk')).order_by('-number')
         return Response(data)
 
 
 class FinishSummary(APIView):
     def get(self, request, format=None):
-        data = Fight.objects.values("method").annotate(
-            number=Count("pk")).order_by("-number")
+        data = Fight.objects.values('method').annotate(
+            number=Count('pk')).order_by('-number')
 
         return Response(data)
 
@@ -59,12 +59,12 @@ class FinishSummary(APIView):
 #
 #
 # class SearchPage(ListView):
-#     template_name = "fights/search_page.html"
+#     template_name = 'fights/search_page.html'
 #     queryset = Fight.objects.all()
 #
 #     def get_context_data(self, **kwargs):
 #         context = super().get_context_data(**kwargs)
-#         context["fights"] = Fight.objects.count()
-#         context["fighters"] = Fighter.objects.count()
+#         context['fights'] = Fight.objects.count()
+#         context['fighters'] = Fighter.objects.count()
 #         return context
 #

@@ -5,18 +5,18 @@ from fights.models import Fighter, Fight, Event
 
 @admin.register(Fighter)
 class FighterAdmin(admin.ModelAdmin):
-    list_display = ("id", "name", "birthday", "height", "weight", "nickname",
-                    "location", "country", "camp", "sherdog_url")
+    list_display = ('id', 'name', 'birthday', 'height', 'weight', 'nickname',
+                    'location', 'country', 'camp', 'sherdog_url')
 
-    search_fields = ["sherdog_url", 'name']
+    search_fields = ['sherdog_url', 'name']
 
 
 @admin.register(Fight)
 class FightAdmin(admin.ModelAdmin):
-    list_display = ("id", "winner", "loser", "method", "round", "time",
-                    "referee", 'event')
+    list_display = ('id', 'winner', 'loser', 'method', 'round', 'time',
+                    'referee', 'event')
 
-    search_fields = ["winner__name", 'loser__name', 'event__title']
+    search_fields = ['winner__name', 'loser__name', 'event__title']
 
 @admin.register(Event)
 class EventAdmin(admin.ModelAdmin):

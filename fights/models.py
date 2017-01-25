@@ -21,8 +21,8 @@ class Fighter(models.Model):
     @property
     def decision_rate(self):
         decisions = self.winners.filter(
-            method__icontains="Decision").count() + self.losers.filter(
-            method__icontains="Decision"
+            method__icontains='Decision').count() + self.losers.filter(
+            method__icontains='Decision'
         ).count()
         return decisions / self.fight_count
 
@@ -48,12 +48,12 @@ class Event(models.Model):
 
 class Fight(models.Model):
     winner = models.ForeignKey(Fighter, null=True, blank=True,
-                               related_name="winners")
+                               related_name='winners')
     winner_name = models.CharField(max_length=255)
     winner_url = models.CharField(max_length=255)
 
     loser = models.ForeignKey(Fighter, null=True, blank=True,
-                              related_name="losers")
+                              related_name='losers')
     loser_name = models.CharField(max_length=255)
     loser_url = models.CharField(max_length=255)
 
@@ -67,4 +67,4 @@ class Fight(models.Model):
         unique_together = ('winner', 'loser', 'event')
 
     def __str__(self):
-        return "{} defeated {}".format(self.winner_name, self.loser_name)
+        return '{} defeated {}'.format(self.winner_name, self.loser_name)
