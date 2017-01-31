@@ -8,6 +8,10 @@ from django.db.models import Count
 
 from fights.models import Fighter, Fight
 from fights.serializers import FighterSerializer, FightSerializer
+import logging
+
+request_logger = logging.getLogger('main_page')
+
 
 
 class FighterList(generics.ListAPIView):
@@ -61,6 +65,8 @@ class IntroAPI(ListView):
     queryset = Fight.objects.all()
 
     def get_context_data(self, **kwargs):
+        request_logger.info(self.request)
+
         context = super().get_context_data(**kwargs)
         context['fights'] = Fight.objects.count()
         context['fighters'] = Fighter.objects.count()
