@@ -4,6 +4,8 @@
 
 .background {
     background-color: #f4f4f4;
+    padding: 0px;
+    margin: 0px;
 }
 
 .mainContent {
@@ -11,4 +13,25 @@
     margin-left: 8%;
     margin-right: 8%;
     height:1000px;
+}
+
+.banner {
+    background-color: blue;
+    height: 60px;
+    margin-top: 0px;
+}
+
+.bannerContainer {
+    width: 100%;
+    height: 50px;
+    display: table;
+    margin-left: 8%;
+    /*text-align: center;*/
+}
+
+.bannerText {
+    color: white;
+    font-size: 28px;
+    display: table-cell;
+    vertical-align: middle;
 }
