@@ -55,7 +55,7 @@ class FighterHandler:
                                          birthday=d['birthday'],
                                          height=d['height'],
                                          weight=d['weight'],
-                                         sherdog_url=d['url'],
+                                         sh_url=d['url'],
                                          nickname=d.get('nickname'),
                                          location=d.get('location'),
                                          country=d.get('country'),
@@ -75,7 +75,7 @@ class FighterHandler:
         '''
         Retrieve fighter from database, creating it if necessary.
         '''
-        fighter = Fighter.objects.filter(sherdog_url=fighter_url).first()
+        fighter = Fighter.objects.filter(sh_url=fighter_url).first()
         if not fighter:
             fighter = self.add_fighter_from_url(fighter_url)
         return fighter
@@ -200,7 +200,7 @@ class EventHandler:
 
     @staticmethod
     def event_in_db(url):
-        return Event.objects.filter(sherdog_url=url).count() > 0
+        return Event.objects.filter(sh_url=url).count() > 0
 
     @staticmethod
     def create_event(soup, url):
@@ -215,7 +215,7 @@ class EventHandler:
             organization=organization,
             date_string=start_date,
             location=location,
-            sherdog_url=url)
+            sh_url=url)
         return event
 
 

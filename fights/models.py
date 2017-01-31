@@ -7,7 +7,7 @@ class Fighter(models.Model):
     birthday = models.CharField(max_length=255)
     height = models.CharField(max_length=255)
     weight = models.CharField(max_length=255)
-    sherdog_url = models.CharField(max_length=255, unique=True)
+    sh_url = models.CharField(max_length=255, unique=True)
 
     country = models.CharField(max_length=255, null=True, blank=True)
     location = models.CharField(max_length=255, null=True, blank=True)
@@ -39,7 +39,7 @@ class Event(models.Model):
     organization = models.CharField(max_length=255)
     date_string = models.CharField(max_length=50)
     location = models.CharField(max_length=255)
-    sherdog_url = models.CharField(max_length=255, null=True, blank=True,
+    sh_url = models.CharField(max_length=255, null=True, blank=True,
                                    unique=True)
 
     def __str__(self):

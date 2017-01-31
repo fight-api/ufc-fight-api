@@ -6,9 +6,9 @@ from fights.models import Fighter, Fight, Event
 @admin.register(Fighter)
 class FighterAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'birthday', 'height', 'weight', 'nickname',
-                    'location', 'country', 'camp', 'sherdog_url')
+                    'location', 'country', 'camp', 'sh_url')
 
-    search_fields = ['sherdog_url', 'name']
+    search_fields = ['sh_url', 'name']
 
 
 @admin.register(Fight)
