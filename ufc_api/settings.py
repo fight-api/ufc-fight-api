@@ -146,6 +146,10 @@ CORS_ORIGIN_ALLOW_ALL = True
 
 STATIC_URL = '/static/'
 
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "global"),
+)
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
