@@ -56,15 +56,13 @@ class FinishSummary(APIView):
         return Response(data)
 
 
-#
-#
-# class SearchPage(ListView):
-#     template_name = 'fights/search_page.html'
-#     queryset = Fight.objects.all()
-#
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         context['fights'] = Fight.objects.count()
-#         context['fighters'] = Fighter.objects.count()
-#         return context
-#
+class IntroAPI(ListView):
+    template_name = 'fights/intro_api.html'
+    queryset = Fight.objects.all()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['fights'] = Fight.objects.count()
+        context['fighters'] = Fighter.objects.count()
+        return context
+

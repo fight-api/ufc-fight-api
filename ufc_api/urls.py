@@ -17,7 +17,7 @@ from django.conf.urls import url
 from django.contrib import admin
 
 from fights.views import FighterList, FighterDetail, FightList, \
-   FightDetail, RefereeSummary, FinishSummary
+   FightDetail, RefereeSummary, FinishSummary, IntroAPI
 
 urlpatterns = [
     url(r'^fighter/$', FighterList.as_view(), name="fighter_list"),
@@ -30,5 +30,6 @@ urlpatterns = [
     url(r'^finish/$', FinishSummary.as_view(), name="finish_summary"),
 
     url(r'^admin/', admin.site.urls),
+    url(r'^$', IntroAPI.as_view()),
 
 ]
