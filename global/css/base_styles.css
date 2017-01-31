@@ -3,5 +3,12 @@
 }
 
 .background {
-    background-color: lightgray;
+    background-color: #f4f4f4;
+}
+
+.mainContent {
+    background-color: white;
+    margin-left: 8%;
+    margin-right: 8%;
+    height:1000px;
 }
