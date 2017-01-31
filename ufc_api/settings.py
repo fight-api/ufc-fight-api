@@ -179,6 +179,11 @@ LOGGING = {
             'level': 'DEBUG',
             'class': 'logging.StreamHandler',
             'formatter': 'verbose'
+        },
+        'requester': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'logs/requests.log')
         }
     },
     'loggers': {
@@ -191,6 +196,11 @@ LOGGING = {
             'handlers': ['file', 'console'],
             'level': 'DEBUG',
             'propagate': True
+        },
+        'main_page': {
+            'handlers': ['requester'],
+            'level': 'INFO',
+            'propogate': True
         }
     }
 }
