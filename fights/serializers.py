@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from fights.models import Fighter, Fight
+from fights.models import Fighter, Fight, Event
 
 
 class FightSerializer(serializers.ModelSerializer):
@@ -35,3 +35,10 @@ class FighterSerializer(serializers.ModelSerializer):
         fields = ('name', 'nickname', 'birthday', 'height', 'weight',
                   'location', 'country', 'camp', 'fight_count',
                   'decision_rate', 'finish_rate', 'winners', 'losers')
+
+
+class EventSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Event
+        fields = ('id', 'title', 'organization', 'date_string', 'location')

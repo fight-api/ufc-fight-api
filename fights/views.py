@@ -6,8 +6,9 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.db.models import Count
 
-from fights.models import Fighter, Fight
-from fights.serializers import FighterSerializer, FightSerializer
+from fights.models import Fighter, Fight, Event
+from fights.serializers import FighterSerializer, FightSerializer, \
+    EventSerializer
 import logging
 
 request_logger = logging.getLogger('main_page')
@@ -44,6 +45,11 @@ class FightDetail(generics.RetrieveAPIView):
     serializer_class = FightSerializer
 
 
+class EventList(generics.ListAPIView):
+    queryset = Event.objects.all()
+    serializer_class = EventSerializer
+
+
 class RefereeSummary(APIView):
 
     def get(self, request, format=None):
@@ -71,4 +77,3 @@ class IntroAPI(ListView):
         context['fights'] = Fight.objects.count()
         context['fighters'] = Fighter.objects.count()
         return context
-
