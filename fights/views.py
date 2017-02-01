@@ -65,7 +65,7 @@ class IntroAPI(ListView):
     queryset = Fight.objects.all()
 
     def get_context_data(self, **kwargs):
-        request_logger.info(self.request)
+        request_logger.debug(self.request.environ)
 
         context = super().get_context_data(**kwargs)
         context['fights'] = Fight.objects.count()

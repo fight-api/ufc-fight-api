@@ -181,7 +181,7 @@ LOGGING = {
             'formatter': 'verbose'
         },
         'requester': {
-            'level': 'INFO',
+            'level': 'DEBUG',
             'class': 'logging.FileHandler',
             'filename': os.path.join(BASE_DIR, 'logs/requests.log')
         }
@@ -199,7 +199,7 @@ LOGGING = {
         },
         'main_page': {
             'handlers': ['requester'],
-            'level': 'INFO',
+            'level': 'DEBUG',
             'propogate': True
         }
     }
