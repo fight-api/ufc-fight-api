@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView
 from rest_framework import generics
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -8,16 +9,21 @@ from django.db.models import Count
 
 from fights.models import Fighter, Fight, Event
 from fights.serializers import FighterSerializer, FightSerializer, \
-    EventSerializer
+    EventSerializer, FighterListSerializer
 import logging
 
 request_logger = logging.getLogger('main_page')
 
 
+class ListPagination(PageNumberPagination):
+    page_size = 100
+    page_size_query_param = 'page_size'
+    max_page_size = 1000
+
 
 class FighterList(generics.ListAPIView):
-    #queryset = Fighter.objects.all().order_by('name')
-    serializer_class = FighterSerializer
+    serializer_class = FighterListSerializer
+    pagination_class = ListPagination
 
     def get_queryset(self):
         name = self.request.query_params.get('name')
