@@ -11,6 +11,7 @@ from fights.models import Fighter, Fight, Event
 from fights.serializers import FighterSerializer, FightSerializer, \
     EventSerializer, FighterListSerializer
 import logging
+import json
 
 request_logger = logging.getLogger('main_page')
 
@@ -82,4 +83,8 @@ class IntroAPI(ListView):
         context = super().get_context_data(**kwargs)
         context['fights'] = Fight.objects.count()
         context['fighters'] = Fighter.objects.count()
+        context['events'] = Event.objects.count()
+
+        fight = Fight.objects.get(id=2335)
+        context['fight_ex'] = json.dumps(FightSerializer(fight).data, indent=4)
         return context

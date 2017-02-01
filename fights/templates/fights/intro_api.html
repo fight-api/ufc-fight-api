@@ -2,25 +2,26 @@
 
 {% block content %}
 <div class="mainContent">
-    <div>
+    <div class="opening">
         Hello and welcome to MMAAPI, a REST API for Mixed Martial Arts data.
         If you aren't sure what that means, don't worry. An API is just a way
         for computer programs to communicate and share information. If you just
         want to see the data you can do so in your browser.
+
     </div>
     <div>
         <p><h3>Why make this?</h3></p>
         <p>As a huge fan of both MMA and sports analytics I have often wondered
             about things like "How well do fighters age?" and "Does a high
-            finish rate predict future success?" After looking and being
-            unable to find a good dataset to work with I decided to make my own
+            finish rate predict future success?" After looking and not finding
+            a good dataset to work with I decided to make my own
             and put an API on it so others can use it too.
         </p>
 
         <p>
             This is a work in progress and I am actively adding more information.
-            The database is updated daily and currently has all x fighters,
-            x fights, and x events in UFC history. Going forward I would like
+            The database is updated daily and currently has all {{ fighters }} fighters,
+            {{ fights }} fights, and {{ events }} events in UFC history. Going forward I would like
             to add more organizations and other interesting information such
             as betting lines for each fight.
         </p>
@@ -31,21 +32,32 @@
         <p><h3>How does it work?</h3></p>
         <p>
             The data is accessed through a typical REST format.
-            curl http://www.mmaapi.com/fighter/ returns a json object
+            Making a GET request, or navigating in your browser, to
+            <span class="codeBox">http://www.mmaapi.com/fighter/</span> returns a json object
             containing a list of fighters along with their id numbers.
         </p>
         <p>
-            curl http://www.mmaapi.com/fighter/486/ returns a single fighter
-            object with bio information and their past won and lost fights.
-            Like so:
-        </p>
-        <p>
-            xxx
+            For example the id for Amanda Nunes is 486.
+            <span class="codeBox">http://www.mmaapi.com/fighter/486/</span> returns an object with
+            her bio information, all of her won and lost fights, and some career statistics
         </p>
 
         <p>
-            The /event/ and /fight/ endpoints can be used in the same manner.
-            The code is hosted on Github at
+            The same can be done for fights. <span class="codeBox">http://www.mmaapi.com/fight/</span>
+            returns a list of events and <span class="codeBox">http://www.mmaapi.com/fight/2335/</span>
+            returns the following object:
+            <span class="codeBox">
+            <pre>
+                <code class="codeResponse">
+                {{ fight_ex }}
+                </code>
+            </pre>
+                </span>
+        </p>
+        <p>
+            The code can be viewed on <a href="https://github.com/fight-api">Github</a>. 
+            Feel free to submit or email me there with any questions or suggestions you have.
+            I'd love to discuss interesting use cases for the data.
         </p>
 
     </div>
