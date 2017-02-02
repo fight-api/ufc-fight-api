@@ -33,14 +33,14 @@
         <p>
             The data is accessed through a typical REST format.
             Making a GET request, or navigating in your browser to
-            <a href="http://www.mmaapi.com/fighter/"><span class="codeBox">http://www.mmaapi.com/fighter/</span> </a>
+            <a href="{% url 'fighter_list' %}"><span class="codeBox">http://www.mmaapi.com/fighter/</span> </a>
             returns a json object
             containing a list of fighters along with their id numbers.
         </p>
         <p>
             For example the id for Amanda Nunes is 486.
             <span class="codeBox">http://www.mmaapi.com/fighter/486/</span> returns an object with
-            her bio information, all of her won and lost fights, and some career statistics
+            her bio information, all of her won and lost fights, and some career statistics.
         </p>
 
         <p>

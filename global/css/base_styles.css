@@ -41,6 +41,7 @@ p {
     height: 50px;
     display: table;
     margin-left: 12%;
+    padding-top: 8px;
 }
 
 .bannerText {

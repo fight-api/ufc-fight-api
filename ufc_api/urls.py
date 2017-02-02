@@ -20,15 +20,15 @@ from fights.views import FighterList, FighterDetail, FightList, \
    FightDetail, RefereeSummary, FinishSummary, IntroAPI, EventList
 
 urlpatterns = [
-    url(r'^fighter/$', FighterList.as_view(), name="fighter_list"),
-    url(r'^fighter/(?P<pk>\d+)/$', FighterDetail.as_view(),
+    url(r'^api/fighter/$', FighterList.as_view(), name="fighter_list"),
+    url(r'^api/fighter/(?P<pk>\d+)/$', FighterDetail.as_view(),
         name="fighter_detail"),
-    url(r'^fight/$', FightList.as_view(), name="fight_list"),
-    url(r'^fight/(?P<pk>\d+)/$', FightDetail.as_view(),
+    url(r'^api/fight/$', FightList.as_view(), name="fight_list"),
+    url(r'^api/fight/(?P<pk>\d+)/$', FightDetail.as_view(),
         name="fight_detail"),
-    url(r'^refs/$', RefereeSummary.as_view(), name="referee_summary"),
-    url(r'^finish/$', FinishSummary.as_view(), name="finish_summary"),
-    url(r'^event/$', EventList.as_view(), name='event_list'),
+    url(r'^api/refs/$', RefereeSummary.as_view(), name="referee_summary"),
+    url(r'^api/finish/$', FinishSummary.as_view(), name="finish_summary"),
+    url(r'^api/event/$', EventList.as_view(), name='event_list'),
     url(r'^docs/', include('rest_framework_swagger.urls')),
 
     url(r'^admin/', admin.site.urls),
