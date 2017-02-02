@@ -31,21 +31,30 @@
     <div>
         <p><h3>How does it work?</h3></p>
         <p>
-            The data is accessed through a typical REST format.
-            Making a GET request, or navigating in your browser to
-            <a href="{% url 'fighter_list' %}"><span class="codeBox">http://www.mmaapi.com/fighter/</span> </a>
-            returns a json object
-            containing a list of fighters along with their id numbers.
+            The data is accessed through a typical REST format. I'll explain what that means but
+            if you are familiar with that structure you might want to head straight to the
+            <a href="http://www.mmaapi.com/docs/">Swagger Docs</a> which break down all of the API endpoints.
+
+
         </p>
+
+        <p>
+            All of the data is accessed from www.mmaapi.com/api/ + whatever type of data you want.
+            Make a GET request through code or your browser to
+            <a href="{% url 'fighter_list' %}"><span class="codeBox">www.mmaapi.com/api/fighter/</span> </a>
+            and you will get a json object with a list of fighters and their id numbers. Add an id number to the url
+            and will get more detailed information about that specific fighter.
+        </p>
+
         <p>
             For example the id for Amanda Nunes is 486.
-            <span class="codeBox">http://www.mmaapi.com/fighter/486/</span> returns an object with
+            <a href="{% url 'fighter_detail' 486 %}"><span class="codeBox">www.mmaapi.com/fighter/486/</span></a> returns an object with
             her bio information, all of her won and lost fights, and some career statistics.
         </p>
 
         <p>
-            The same can be done for fights. <span class="codeBox">http://www.mmaapi.com/fight/</span>
-            returns a list of events and <span class="codeBox">http://www.mmaapi.com/fight/2335/</span>
+            The same can be done for fights. <a href="{% url 'fight_list' %}"><span class="codeBox">www.mmaapi.com/fight/</span></a>
+            returns a list of events and <a href="{% url 'fight_detail' 2335 %}"><span class="codeBox">www.mmaapi.com/fight/2335/</span></a>
             returns the following object:
             <span class="codeBox">
             <pre>
@@ -57,8 +66,10 @@
         </p>
 
         <p>
-            The <span class="codeBox">/event/</span> endpoint works the same
-            as <span class="codeBox">/fight/</span> and <span class="codeBox">/fighter</span>.
+            This works for <a href="{% url 'event_list' %}"><span class="codeBox">events</span></a>
+            and any other resource in the database.
+            Check out the docs page for complete documentation.
+
         </p>
 
         <p>

@@ -4,6 +4,15 @@ p {
     padding-right: 10px;
 }
 
+a {
+    text-decoration: none;
+    color: darkgreen;
+}
+
+a:hover {
+    color: #E2C078;
+}
+
 .opening {
     padding-top: 10px;
     padding-left: 10px;
@@ -20,19 +29,19 @@ p {
 }
 
 .background {
-    background-color: #f4f4f4;
+    background-color: #847C6F;
     padding: 0px;
     margin: 0px;
 }
 
 .mainContent {
-    background-color: white;
+    background-color: #F0EEE1;
     margin-left: 12%;
     margin-right: 12%;
 }
 
 .banner {
-    background-color: blue;
+    background-color: #313842;
     height: 60px;
     margin-top: 0px;
 }
