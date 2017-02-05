@@ -1,5 +1,10 @@
-p {
+.mainContent p {
     padding-top: 1px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.mainContent div {
     padding-left: 10px;
     padding-right: 10px;
 }
@@ -32,6 +37,7 @@ a:hover {
     background-color: #847C6F;
     padding: 0px;
     margin: 0px;
+    font-family:Tahoma, serif;
 }
 
 .mainContent {

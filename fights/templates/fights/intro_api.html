@@ -3,13 +3,14 @@
 {% block content %}
 <div class="mainContent">
     <div class="opening">
+        <p>
         Hello and welcome to MMAAPI, a REST API for Mixed Martial Arts data.
         If you aren't sure what that means, don't worry. An API is just a way
         for computer programs to communicate and share information. If you just
         want to see the data you can do so in your browser.
-
+        </p>
     </div>
-    <div>
+    <div class="offset-background">
         <p><h3>Why make this?</h3></p>
         <p>As a huge fan of both MMA and sports analytics I have often wondered
             about things like "How well do fighters age?" and "Does a high
@@ -41,7 +42,7 @@
         <p>
             All of the data is accessed from www.mmaapi.com/api/ + whatever type of data you want.
             Make a GET request through code or your browser to
-            <a href="{% url 'fighter_list' %}"><span class="codeBox">www.mmaapi.com/api/fighter/</span> </a>
+            <a href="{% url 'fighter_list' %}"><span class="codeBox">www.mmaapi.com/api/fighter/</span>     </a>
             and you will get a json object with a list of fighters and their id numbers. Add an id number to the url
             and will get more detailed information about that specific fighter.
         </p>
