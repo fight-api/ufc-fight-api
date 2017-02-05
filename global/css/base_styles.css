@@ -1,5 +1,4 @@
 .mainContent p {
-    /*padding-top: 1px;*/
     padding-left: 10px;
     padding-right: 10px;
 }
@@ -20,7 +19,7 @@ a:hover {
 
 hr {
     width: 60%;
-    margin-top: 30px;
+    margin-top: 23px;
 }
 
 .opening {
