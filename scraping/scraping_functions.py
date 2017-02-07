@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
 from fights.models import Fighter, Fight, Event
+from dateutil import parser
 
 
 class FighterHandler:
@@ -197,6 +198,10 @@ class EventHandler:
 
     def __init__(self):
         self.base_url = 'http://www.sherdog.com'
+
+    @staticmethod
+    def date_string_to_datetime(d):
+        return parser.parse(d)
 
     @staticmethod
     def event_in_db(url):
