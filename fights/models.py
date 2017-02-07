@@ -38,6 +38,7 @@ class Event(models.Model):
     title = models.CharField(max_length=255)
     organization = models.CharField(max_length=255)
     date_string = models.CharField(max_length=50)
+    dt_date = models.DateTimeField(null=True, blank=True)
     location = models.CharField(max_length=255)
     sh_url = models.CharField(max_length=255, null=True, blank=True,
                                    unique=True)
