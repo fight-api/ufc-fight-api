@@ -200,10 +200,6 @@ class EventHandler:
         self.base_url = 'http://www.sherdog.com'
 
     @staticmethod
-    def date_string_to_datetime(d):
-        return parser.parse(d)
-
-    @staticmethod
     def event_in_db(url):
         return Event.objects.filter(sh_url=url).count() > 0
 
@@ -219,6 +215,7 @@ class EventHandler:
             title=title,
             organization=organization,
             date_string=start_date,
+            dt_date=parser.parse(start_date),
             location=location,
             sh_url=url)
         return event
