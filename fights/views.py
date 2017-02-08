@@ -57,6 +57,11 @@ class EventList(generics.ListAPIView):
     serializer_class = EventSerializer
 
 
+class EventDetail(generics.RetrieveAPIView):
+    queryset = Event.objects.all()
+    serializer_class = EventSerializer
+
+
 class RefereeSummary(APIView):
 
     def get(self, request, format=None):
