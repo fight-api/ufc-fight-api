@@ -207,7 +207,8 @@ class EventHandler:
     def create_event(soup, url):
 
         items = soup.find_all('span', itemprop='name')
-        title = items[0].text
+        title_contents = [x for x in items[0] if not hasattr(x, 'text')]
+        title = ' '.join(title_contents)
         organization = items[1].text
         start_date = soup.find('meta', itemprop='startDate').text
         location = soup.find('span', itemprop='location').text
