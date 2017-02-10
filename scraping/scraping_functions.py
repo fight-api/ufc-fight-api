@@ -30,6 +30,8 @@ class FighterHandler:
 
         obj['url'] = url
         obj['birthday'] = bio.find('span', itemprop='birthDate').text
+        obj['dt_birthday'] = parser.parse(obj['birthday'])
+
         obj['height'] = bio.find('span', class_='item height').find(
             'strong').text
         obj['weight'] = bio.find('span', class_='item weight').find(
@@ -54,6 +56,7 @@ class FighterHandler:
 
         fighter = Fighter.objects.create(name=d['name'],
                                          birthday=d['birthday'],
+                                         dt_birthday=d['dt_birthday'],
                                          height=d['height'],
                                          weight=d['weight'],
                                          sh_url=d['url'],
