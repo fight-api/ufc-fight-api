@@ -77,7 +77,8 @@ class Fight(models.Model):
         return None
 
     def calc_stats(self):
-        pass
+        self.finish_type = self.get_finish_type()
+
 
     class Meta:
         unique_together = ('winner', 'loser', 'event')

@@ -7,7 +7,7 @@ class FightSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Fight
-        fields = ('id', 'winner_name', 'loser_name', 'method', 'referee', 'round',
+        fields = ('id', 'winner_name', 'loser_name', 'method', 'finish_type', 'referee', 'round',
                   'time')
 
 
