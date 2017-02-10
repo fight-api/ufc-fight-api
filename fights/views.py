@@ -45,6 +45,7 @@ class FighterDetail(generics.RetrieveAPIView):
 class FightList(generics.ListAPIView):
     queryset = Fight.objects.all()
     serializer_class = FightSerializer
+    filter_fields = ('id', 'round')
 
 
 class FightDetail(generics.RetrieveAPIView):
