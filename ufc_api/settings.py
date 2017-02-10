@@ -202,7 +202,7 @@ LOGGING = {
             'propagate': True
         },
         'main_page': {
-            'handlers': ['requester'],
+            'handlers': ['requester', 'console'],
             'level': 'DEBUG',
             'propogate': True
         }
