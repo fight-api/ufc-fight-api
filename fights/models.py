@@ -5,6 +5,7 @@ class Fighter(models.Model):
 
     name = models.CharField(max_length=255)
     birthday = models.CharField(max_length=255)
+    dt_birthday = models.DateTimeField(null=True, blank=True)
     height = models.CharField(max_length=255)
     weight = models.CharField(max_length=255)
     sh_url = models.CharField(max_length=255, unique=True)
