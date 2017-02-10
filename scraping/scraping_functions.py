@@ -2,6 +2,9 @@ from bs4 import BeautifulSoup
 import requests
 from fights.models import Fighter, Fight, Event
 from dateutil import parser
+import logging
+
+debug_logger = logging.getLogger('debug_logger')
 
 
 class FighterHandler:
@@ -208,6 +211,7 @@ class EventHandler:
 
     @staticmethod
     def create_event(soup, url):
+        debug_logger.debug('event create')
 
         items = soup.find_all('span', itemprop='name')
         title_contents = [x for x in items[0] if not hasattr(x, 'text')]
@@ -222,6 +226,7 @@ class EventHandler:
             dt_date=parser.parse(start_date),
             location=location,
             sh_url=url)
+        debug_logger.debug('event title: {}'.format(title))
         return event
 
 
