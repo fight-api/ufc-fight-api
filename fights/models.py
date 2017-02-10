@@ -61,12 +61,30 @@ class Fight(models.Model):
 
     event = models.ForeignKey(Event, null=True, blank=True)
     method = models.CharField(max_length=255)
+    finish_type = models.CharField(max_length=50, null=True, blank=True)
+
     referee = models.CharField(max_length=255)
     round = models.CharField(max_length=255)
     time = models.CharField(max_length=255)
 
+    def get_finish_type(self):
+        finish_types = ['submission', 'ko', 'decision', 'draw', 'nc']
+        method = self.method.lower()
+
+        for finish in finish_types:
+            if finish in method:
+                return finish
+        return None
+
+    def calc_stats(self):
+        pass
+
     class Meta:
         unique_together = ('winner', 'loser', 'event')
+
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        super().save(force_insert, force_update, using, update_fields)
 
     def __str__(self):
         return '{} defeated {}'.format(self.winner_name, self.loser_name)
