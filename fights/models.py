@@ -96,6 +96,8 @@ class Fight(models.Model):
 
     def calc_stats(self):
         self.finish_type = self.get_finish_type()
+        self.winner_experience = self.winner.fights_on_date(self.event.dt_date)
+        self.loser_experience = self.loser.fights_on_date(self.event.dt_date)
 
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
