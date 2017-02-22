@@ -116,10 +116,43 @@ class Fight(models.Model):
         self.winner_age = self.winner.age_on_date(d)
         self.loser_age = self.loser.age_on_date(d)
 
+    def get_streak(self, fighter):
+        """
+        Determine the streak of a fighter prior to this bout.
+        """
+        fights = fighter.winners.all() | fighter.losers.all()
+        fights = fights.filter(event__dt_date__lt=self.event.dt_date)
+        if not fights:
+            return 0
+
+        fights = fights.order_by('-event__dt_date')
+        winning = fights[0].winner == fighter
+        count = 0
+        if winning:
+            for fight in fights:
+                if fight.winner == fighter:
+                    count += 1
+                else:
+                    break
+        else:
+            for fight in fights:
+                if fight.loser == fighter:
+                    count -= 1
+                else:
+                    break
+        return count
+
+    def set_fighter_streaks(self):
+        """
+        Set the streaks for both fighters entering this bout.
+        """
+        pass
+
     def calc_stats(self):
         self.finish_type = self.get_finish_type()
         self.winner_experience = self.winner.fights_on_date(self.event.dt_date)
         self.loser_experience = self.loser.fights_on_date(self.event.dt_date)
+        self.set_fighter_ages()
 
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
