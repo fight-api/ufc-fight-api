@@ -2,7 +2,8 @@
 A collection of functions for parsing data.
 """
 
-from fights.models import Fighter
+from fights.models import Fighter, Fight
+
 
 def set_fighter_dt_birthday():
     for fighter in Fighter.objects.all():
@@ -13,6 +14,10 @@ def set_fighter_dt_birthday():
             print(fighter.id)
 
 
+def set_fight_ages():
+    for fight in Fight.objects.all():
+        fight.set_fighter_ages()
+        fight.save()
 
 
 

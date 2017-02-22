@@ -30,8 +30,11 @@ class Fighter(models.Model):
         :param d: A datetime object.
         :return: Number of years old a fighter is on a certain date.
         """
-        days = (d - self.dt_birthday).days
-        return days / 365
+        if self.dt_birthday:
+            days = (d - self.dt_birthday).days
+            return days / 365
+        else:
+            return None
 
     @property
     def fight_count(self):
