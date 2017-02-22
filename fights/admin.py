@@ -14,9 +14,12 @@ class FighterAdmin(admin.ModelAdmin):
 @admin.register(Fight)
 class FightAdmin(admin.ModelAdmin):
     list_display = ('id', 'winner', 'loser', 'method', 'round', 'time',
-                    'referee', 'event', 'winner_age', 'loser_age')
+                    'referee', 'event', 'winner_age', 'loser_age', 'event_date')
 
     search_fields = ['winner__name', 'loser__name', 'event__title']
+
+    def event_date(self, obj):
+        return obj.event.dt_date
 
 @admin.register(Event)
 class EventAdmin(admin.ModelAdmin):
