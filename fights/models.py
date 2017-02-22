@@ -104,6 +104,15 @@ class Fight(models.Model):
                 return finish
         return None
 
+    def set_fighter_ages(self):
+        """
+        Set the ages of the winning and losing fighters at the time of the
+        fight.
+        """
+        d = self.event.dt_date
+        self.winner_age = self.winner.age_on_date(d)
+        self.loser_age = self.loser.age_on_date(d)
+
     def calc_stats(self):
         self.finish_type = self.get_finish_type()
         self.winner_experience = self.winner.fights_on_date(self.event.dt_date)

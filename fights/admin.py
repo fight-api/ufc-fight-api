@@ -5,7 +5,7 @@ from fights.models import Fighter, Fight, Event
 
 @admin.register(Fighter)
 class FighterAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'birthday', 'height', 'weight', 'nickname',
+    list_display = ('id', 'name', 'birthday', 'dt_birthday', 'height', 'weight', 'nickname',
                     'location', 'country', 'camp', 'sh_url')
 
     search_fields = ['sh_url', 'name']
