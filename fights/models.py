@@ -25,6 +25,14 @@ class Fighter(models.Model):
         priors = fights.filter(event__dt_date__lt=d)
         return priors.count()
 
+    def age_on_date(self, d):
+        """
+        :param d: A datetime object.
+        :return: Number of years old a fighter is on a certain date.
+        """
+        days = (d - self.dt_birthday).days
+        return days / 365
+
     @property
     def fight_count(self):
         return self.winners.count() + self.losers.count()
