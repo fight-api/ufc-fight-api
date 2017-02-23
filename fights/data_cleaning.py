@@ -20,7 +20,10 @@ def set_fight_ages():
         fight.save()
 
 
-
+def set_win_streaks():
+    for fight in Fight.objects.all():
+        fight.set_fighter_streaks()
+        fight.save()
 
 
 

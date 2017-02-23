@@ -148,7 +148,8 @@ class Fight(models.Model):
         """
         Set the streaks for both fighters entering this bout.
         """
-        pass
+        self.winner_streak = self.get_streak(self.winner)
+        self.loser_streak = self.get_streak(self.loser)
 
     def calc_stats(self):
         self.finish_type = self.get_finish_type()

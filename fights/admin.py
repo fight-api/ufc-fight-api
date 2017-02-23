@@ -14,7 +14,7 @@ class FighterAdmin(admin.ModelAdmin):
 @admin.register(Fight)
 class FightAdmin(admin.ModelAdmin):
     list_display = ('id', 'winner', 'loser', 'method', 'round', 'time',
-                    'referee', 'event', 'winner_age', 'loser_age', 'event_date')
+                    'referee', 'event', 'winner_age', 'loser_age', 'winner_streak', 'loser_streak', 'event_date')
 
     search_fields = ['winner__name', 'loser__name', 'event__title']
 
