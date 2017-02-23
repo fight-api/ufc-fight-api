@@ -82,6 +82,7 @@ class Fight(models.Model):
     winner_url = models.CharField(max_length=255)
     winner_experience = models.IntegerField(null=True, blank=True)
     winner_age = models.FloatField(null=True, blank=True)
+    winner_streak = models.IntegerField(null=True, blank=True)
 
     loser = models.ForeignKey(Fighter, null=True, blank=True,
                               related_name='losers')
@@ -89,6 +90,7 @@ class Fight(models.Model):
     loser_url = models.CharField(max_length=255)
     loser_experience = models.IntegerField(null=True, blank=True)
     loser_age = models.FloatField(null=True, blank=True)
+    loser_streak = models.IntegerField(null=True, blank=True)
 
     event = models.ForeignKey(Event, null=True, blank=True)
     method = models.CharField(max_length=255)
