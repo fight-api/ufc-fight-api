@@ -1,3 +1,7 @@
+"""
+Scraping classes for Sherdog fights and events.
+"""
+
 from bs4 import BeautifulSoup
 import requests
 from fights.models import Fighter, Fight, Event

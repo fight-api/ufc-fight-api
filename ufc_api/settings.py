@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'bs4',
     'fights',
     'scraping',
-
+    'bootstrap3'
 ]
 
 MIDDLEWARE_CLASSES = [
