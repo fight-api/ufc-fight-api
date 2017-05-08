@@ -1,5 +1,5 @@
 from django.core.management import BaseCommand
-from scraping.scraping_functions import SherdogEvents
+from scraping.scraping_classes import SherdogEvents
 
 
 class Command(BaseCommand):
