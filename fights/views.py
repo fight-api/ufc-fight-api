@@ -6,6 +6,7 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.db.models import Count
+from django.views.generic import TemplateView
 
 from fights.models import Fighter, Fight, Event
 from fights.serializers import FighterSerializer, FightSerializer, \
@@ -94,3 +95,7 @@ class IntroAPI(ListView):
         fight = Fight.objects.get(id=2335)
         context['fight_ex'] = json.dumps(FightSerializer(fight).data, indent=4)
         return context
+
+
+class DataExplorer(TemplateView):
+    template_name = 'fights/data_explorer.html'

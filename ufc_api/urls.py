@@ -17,7 +17,7 @@ from django.conf.urls import url, include
 from django.contrib import admin
 
 from fights.views import FighterList, FighterDetail, FightList, \
-   FightDetail, RefereeSummary, FinishSummary, IntroAPI, EventList, EventDetail
+   FightDetail, RefereeSummary, FinishSummary, IntroAPI, EventList, EventDetail, DataExplorer
 
 urlpatterns = [
     url(r'^api/fighter/$', FighterList.as_view(), name="fighter_list"),
@@ -30,9 +30,10 @@ urlpatterns = [
     url(r'^api/finish/$', FinishSummary.as_view(), name="finish_summary"),
     url(r'^api/event/$', EventList.as_view(), name='event_list'),
     url(r'^api/event/(?P<pk>\d+)/$', EventDetail.as_view(), name='event_detail'),
+    url(r'^explorer/$', DataExplorer.as_view(), name='data_explorer'),
     url(r'^docs/', include('rest_framework_swagger.urls')),
 
     url(r'^admin/', admin.site.urls),
-    url(r'^$', IntroAPI.as_view()),
+    url(r'^$', IntroAPI.as_view(), name='intro'),
 
 ]
