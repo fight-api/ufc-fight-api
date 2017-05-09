@@ -166,3 +166,15 @@ class Fight(models.Model):
 
     class Meta:
         unique_together = ('winner', 'loser', 'event')
+
+
+class FightQuery(models.Model):
+    """
+    A user generated search query. This model tracks search parameters and the accompanying results.
+    """
+    # Search parameters
+    win_loss_streak = models.IntegerField(null=True, blank=True)
+    min_age = models.PositiveIntegerField(null=True, blank=True)
+    max_age = models.PositiveIntegerField(null=True, blank=True)
+    min_experience = models.IntegerField(null=True, blank=True)
+    max_experience = models.IntegerField(null=True, blank=True)
