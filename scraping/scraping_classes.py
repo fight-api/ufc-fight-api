@@ -37,7 +37,10 @@ class FighterHandler:
 
         obj['url'] = url
         obj['birthday'] = bio.find('span', itemprop='birthDate').text
-        obj['dt_birthday'] = parser.parse(obj['birthday'])
+        try:
+            obj['dt_birthday'] = parser.parse(obj['birthday'])
+        except ValueError:
+            obj['dt_birthday'] = None
 
         obj['height'] = bio.find('span', class_='item height').find(
             'strong').text
