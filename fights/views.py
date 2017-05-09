@@ -99,3 +99,7 @@ class IntroAPI(ListView):
 
 class DataExplorer(TemplateView):
     template_name = 'fights/data_explorer.html'
+
+
+class DataResults(TemplateView):
+    template_name = 'fights/data_results.html'
