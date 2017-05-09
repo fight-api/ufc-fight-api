@@ -156,9 +156,11 @@ class Fight(models.Model):
         self.winner_experience = self.winner.fights_on_date(self.event.dt_date)
         self.loser_experience = self.loser.fights_on_date(self.event.dt_date)
         self.set_fighter_ages()
+        self.set_fighter_streaks()
 
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
+        self.calc_stats()
         super().save(force_insert, force_update, using, update_fields)
 
     def __str__(self):
@@ -180,3 +182,6 @@ class FightQuery(models.Model):
     max_experience = models.IntegerField(null=True, blank=True)
 
     created_date = models.DateTimeField(auto_now_add=True, null=True)
+
+    def calc_result_stats(self):
+        pass
