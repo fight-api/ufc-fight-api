@@ -34,7 +34,6 @@ urlpatterns = [
     url(r'^data/query/$', data_query, name='data_query'),
     url(r'^data/results/(?P<pk>\d+)/$', DataResults.as_view(), name='data_results'),
     url(r'^docs/', include('rest_framework_swagger.urls')),
-
     url(r'^admin/', admin.site.urls),
     url(r'^$', IntroAPI.as_view(), name='intro'),
 

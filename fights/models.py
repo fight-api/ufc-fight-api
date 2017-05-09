@@ -213,11 +213,15 @@ class FightQuery(models.Model):
 
         wins = Fight.objects.filter(**win_filter).count()
         losses = Fight.objects.filter(**loss_filter).count()
-        win_rate = wins/(wins + losses)
-        results = {
-            'wins': wins,
-            'losses': losses,
-            'win_rate': "{0:.0f}%".format(win_rate * 100),
-            'win_size': win_rate * 100
-        }
-        return results
+
+        if wins or losses:
+            win_rate = wins/(wins + losses)
+            results = {
+                'wins': wins,
+                'losses': losses,
+                'win_rate': "{0:.0f}%".format(win_rate * 100),
+                'win_size': win_rate * 100
+            }
+            return results
+        else:
+            return dict()

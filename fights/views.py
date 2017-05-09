@@ -119,15 +119,16 @@ class DataResults(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        a=1
         fight_query = get_object_or_404(FightQuery, pk=context['pk'])
         results = fight_query.calc_win_rate()
         context['name'] = str(fight_query)
         context['recent_searches'] = FightQuery.objects.order_by('-created_date')[:5]
-        return {
+        context = {
             **context,
             **results
         }
+
+        return context
 
 
 

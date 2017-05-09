@@ -1,16 +1,18 @@
 {% extends 'fights/base.html' %}
 {% load bootstrap3 %}
+{% load static %}
 
 {% block content %}
+    {% if win_rate %}
     <h2>{{ name }}</h2>
 <ul>
 <li><h3>Win Rate: {{ win_rate }}</h3>
-{#<div class="progress">#}
-{#  <div class="progress-bar" role="progressbar" style="width: {{ win_size }}%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">{{ win_rate }}</div>#}
-{#</div>#}
 </li>
 <li><h3> Wins: {{ wins }}</h3></li>
 <li><h3> Losses: {{ losses }}</h3></li>
-
 </ul>
+    {% else %}
+        <h3>The unicorn you seek does not exist.</h3>
+    <img class="unicorn" src="{% static 'images/blue_unicorn.png' %}">
+    {% endif %}
 {% endblock %}
