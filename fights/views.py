@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView, DetailView
 from rest_framework import generics
 from rest_framework.pagination import PageNumberPagination
@@ -116,3 +116,18 @@ def data_query(request):
 
 class DataResults(TemplateView):
     template_name = 'fights/data_results.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        a=1
+        fight_query = get_object_or_404(FightQuery, pk=context['pk'])
+        results = fight_query.calc_win_rate()
+        context['name'] = str(fight_query)
+        context['recent_searches'] = FightQuery.objects.order_by('-created_date')[:5]
+        return {
+            **context,
+            **results
+        }
+
+
+

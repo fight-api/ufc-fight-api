@@ -1,4 +1,5 @@
 from django.db import models
+from django.forms.models import model_to_dict
 
 
 class Fighter(models.Model):
@@ -183,5 +184,40 @@ class FightQuery(models.Model):
 
     created_date = models.DateTimeField(auto_now_add=True, null=True)
 
-    def calc_result_stats(self):
-        pass
+    def __str__(self):
+        values = []
+        if self.win_loss_streak:
+            values.append('Streak: {}'.format(self.win_loss_streak))
+        if self.min_age and self.max_age:
+            values.append('Age: {}-{}'.format(self.min_age, self.max_age))
+        if self.min_experience and self.max_experience:
+            values.append('Exp: {}-{}'.format(self.min_experience, self.max_experience))
+
+        return ', '.join(values)
+
+    def get_query_filters(self):
+        query_filters = {
+            'streak': self.win_loss_streak,
+            'age__gte': self.min_age,
+            'age__lte': self.max_age,
+            'experience__gte': self.min_experience,
+            'experience__lte': self.max_experience
+        }
+        return {k:v for k,v in query_filters.items() if v}
+
+    def calc_win_rate(self):
+
+        query_filters = self.get_query_filters()
+        win_filter = {'winner_{}'.format(k): v for k,v in query_filters.items()}
+        loss_filter = {'loser_{}'.format(k): v for k,v in query_filters.items()}
+
+        wins = Fight.objects.filter(**win_filter).count()
+        losses = Fight.objects.filter(**loss_filter).count()
+        win_rate = wins/(wins + losses)
+        results = {
+            'wins': wins,
+            'losses': losses,
+            'win_rate': "{0:.0f}%".format(win_rate * 100),
+            'win_size': win_rate * 100
+        }
+        return results
