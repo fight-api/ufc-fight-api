@@ -6,9 +6,11 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.db.models import Count
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, CreateView
+from django.core.urlresolvers import reverse_lazy
 
-from fights.models import Fighter, Fight, Event
+from fights.forms import FighterQueryForm
+from fights.models import Fighter, Fight, Event, FightQuery
 from fights.serializers import FighterSerializer, FightSerializer, \
     EventSerializer, FighterListSerializer
 import logging
@@ -97,8 +99,11 @@ class IntroAPI(ListView):
         return context
 
 
-class DataExplorer(TemplateView):
+class DataExplorer(CreateView):
+    model = FightQuery
     template_name = 'fights/data_explorer.html'
+    form_class = FighterQueryForm
+    success_url = reverse_lazy('data_results')
 
 
 class DataResults(TemplateView):
