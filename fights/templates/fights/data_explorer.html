@@ -10,7 +10,7 @@
     <form method="post" action="{% url 'data_results' %}" class="form" enctype="multipart/form-data">
         {% csrf_token %}
         {% bootstrap_form form %}
-        {% buttons submit="Create" %}{% endbuttons %}
+        {% buttons submit="Calculate" %}{% endbuttons %}
 
     </form>
 

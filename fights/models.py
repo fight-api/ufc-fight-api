@@ -178,3 +178,5 @@ class FightQuery(models.Model):
     max_age = models.PositiveIntegerField(null=True, blank=True)
     min_experience = models.IntegerField(null=True, blank=True)
     max_experience = models.IntegerField(null=True, blank=True)
+
+    created_date = models.DateTimeField(auto_now_add=True, null=True)
