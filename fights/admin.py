@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from fights.models import Fighter, Fight, Event
+from fights.models import Fighter, Fight, Event, FightQuery
 
 
 @admin.register(Fighter)
@@ -21,6 +21,12 @@ class FightAdmin(admin.ModelAdmin):
     def event_date(self, obj):
         return obj.event.dt_date
 
+
 @admin.register(Event)
 class EventAdmin(admin.ModelAdmin):
     list_display = [field.name for field in Event._meta.fields]
+
+
+@admin.register(FightQuery)
+class FightQueryAdmin(admin.ModelAdmin):
+    list_display = [field.name for field in FightQuery._meta.fields]

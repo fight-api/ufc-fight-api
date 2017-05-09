@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView
 from rest_framework import generics
 from rest_framework.pagination import PageNumberPagination
@@ -104,6 +104,14 @@ class DataExplorer(CreateView):
     template_name = 'fights/data_explorer.html'
     form_class = FighterQueryForm
     success_url = reverse_lazy('data_results')
+
+
+def data_query(request):
+    if request.method == 'POST':
+        form = FighterQueryForm(request.POST)
+        if form.is_valid():
+            fight_query = form.save()
+            return redirect('data_results', pk=fight_query.pk)
 
 
 class DataResults(TemplateView):

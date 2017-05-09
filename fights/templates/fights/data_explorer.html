@@ -7,7 +7,7 @@
         Select some fighter statistics and we will search our entire fight database to determine how often fighters
         matching those stats win.
     </p>
-    <form method="post" action="{% url 'data_results' %}" class="form" enctype="multipart/form-data">
+    <form method="post" action="{% url 'data_query' %}" class="form" enctype="multipart/form-data">
         {% csrf_token %}
         {% bootstrap_form form %}
         {% buttons submit="Calculate" %}{% endbuttons %}
