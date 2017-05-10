@@ -190,12 +190,13 @@ class FightQuery(models.Model):
         values = []
         if self.win_loss_streak:
             values.append('Streak: {}'.format(self.win_loss_streak))
-        if self.min_age and self.max_age:
+        if self.min_age or self.max_age:
             values.append('Age: {}-{}'.format(self.min_age, self.max_age))
-        if self.min_experience and self.max_experience:
+        if self.min_experience or self.max_experience:
             values.append('Exp: {}-{}'.format(self.min_experience, self.max_experience))
 
-        return ', '.join(values)
+        value = ', '.join(values)
+        return value.replace('None', 'any')
 
     def get_query_filters(self):
         query_filters = {
