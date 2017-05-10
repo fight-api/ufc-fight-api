@@ -107,7 +107,7 @@ class DataExplorer(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['recent_searches'] = FightQuery.objects.order_by('-created_date')[:5]
+        context['recent_searches'] = FightQuery.objects.order_by('-updated_date')[:5]
         return context
 
 
@@ -126,9 +126,13 @@ class DataResults(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         fight_query = get_object_or_404(FightQuery, pk=context['pk'])
+        fight_query.search_count += 1
+        fight_query.save()
+
         results = fight_query.calc_win_rate()
         context['name'] = str(fight_query)
-        context['recent_searches'] = FightQuery.objects.order_by('-created_date')[:5]
+        context['recent_searches'] = FightQuery.objects.order_by('-updated_date')[:5]
+
         context = {
             **context,
             **results
