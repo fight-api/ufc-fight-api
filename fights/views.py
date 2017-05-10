@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView, DetailView
 from rest_framework import generics
@@ -8,6 +9,7 @@ from rest_framework.response import Response
 from django.db.models import Count
 from django.views.generic import TemplateView, CreateView
 from django.core.urlresolvers import reverse_lazy
+from rest_framework.permissions import IsAuthenticated
 
 from fights.forms import FighterQueryForm
 from fights.models import Fighter, Fight, Event, FightQuery
@@ -28,6 +30,7 @@ class ListPagination(PageNumberPagination):
 class FighterList(generics.ListAPIView):
     serializer_class = FighterListSerializer
     pagination_class = ListPagination
+    permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
         name = self.request.query_params.get('name')
@@ -43,27 +46,32 @@ class FighterList(generics.ListAPIView):
 class FighterDetail(generics.RetrieveAPIView):
     queryset = Fighter.objects.all()
     serializer_class = FighterSerializer
+    permission_classes = (IsAuthenticated,)
 
 
 class FightList(generics.ListAPIView):
     queryset = Fight.objects.all()
     serializer_class = FightSerializer
     filter_fields = ('id', 'round')
+    permission_classes = (IsAuthenticated,)
 
 
 class FightDetail(generics.RetrieveAPIView):
     queryset = Fight.objects.all()
     serializer_class = FightSerializer
+    permission_classes = (IsAuthenticated,)
 
 
 class EventList(generics.ListAPIView):
     queryset = Event.objects.all()
     serializer_class = EventSerializer
+    permission_classes = (IsAuthenticated,)
 
 
 class EventDetail(generics.RetrieveAPIView):
     queryset = Event.objects.all()
     serializer_class = EventSerializer
+    permission_classes = (IsAuthenticated,)
 
 
 class RefereeSummary(APIView):
