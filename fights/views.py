@@ -105,6 +105,12 @@ class DataExplorer(CreateView):
     form_class = FighterQueryForm
     success_url = reverse_lazy('data_results')
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['recent_searches'] = FightQuery.objects.order_by('-created_date')[:5]
+        return context
+
+
 
 def data_query(request):
     if request.method == 'POST':
