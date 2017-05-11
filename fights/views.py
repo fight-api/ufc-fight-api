@@ -18,6 +18,9 @@ from fights.serializers import FighterSerializer, FightSerializer, \
 import logging
 import json
 
+import plotly.offline as opy
+import plotly.graph_objs as go
+
 request_logger = logging.getLogger('main_page')
 
 
@@ -137,16 +140,36 @@ class DataResults(TemplateView):
         fight_query.search_count += 1
         fight_query.save()
 
-        results = fight_query.calc_win_rate()
+        wins, losses = fight_query.get_wins_losses()
+        wins_count = wins.count()
+        loss_count = losses.count()
+        results_average = dict()
+        if wins or losses:
+            win_rate = wins_count/(wins_count + loss_count)
+            results_average = {
+                    'wins': wins_count,
+                    'losses': loss_count,
+                    'win_rate': "{0:.0f}%".format(win_rate * 100),
+                    'win_size': win_rate * 100
+                }
+
         context['name'] = str(fight_query)
         context['recent_searches'] = FightQuery.objects.order_by('-updated_date')[:5]
 
         context = {
             **context,
-            **results
+            **results_average
         }
+        x = [-2,0,4,6,7]
+        y = [q**2-q+3 for q in x]
+        trace1 = go.Scatter(x=x, y=y, marker={'color': 'red', 'symbol': 104, 'size': "10"},
+                            mode="lines",  name='1st Trace')
+
+        data=go.Data([trace1])
+        layout=go.Layout(title="Win percentage by age", xaxis={'title':'x1'}, yaxis={'title':'x2'})
+        figure=go.Figure(data=data,layout=layout)
+        div = opy.plot(figure, auto_open=False, output_type='div')
+
+        context['graph'] = div
 
         return context
-
-
-

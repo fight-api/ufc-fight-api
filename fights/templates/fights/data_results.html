@@ -15,4 +15,10 @@
         <h3>The unicorn you seek does not exist.</h3>
     <img class="unicorn" src="{% static 'images/blue_unicorn.png' %}">
     {% endif %}
+
+    {% if graph %}
+<div style="width:600px;height:500px">
+{{ graph|safe }}
+</div>
+{% endif %}
 {% endblock %}

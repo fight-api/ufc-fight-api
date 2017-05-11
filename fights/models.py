@@ -208,23 +208,13 @@ class FightQuery(models.Model):
         }
         return {k:v for k,v in query_filters.items() if v}
 
-    def calc_win_rate(self):
+    def get_wins_losses(self):
 
         query_filters = self.get_query_filters()
         win_filter = {'winner_{}'.format(k): v for k,v in query_filters.items()}
         loss_filter = {'loser_{}'.format(k): v for k,v in query_filters.items()}
 
-        wins = Fight.objects.filter(**win_filter).count()
-        losses = Fight.objects.filter(**loss_filter).count()
+        wins = Fight.objects.filter(**win_filter)
+        losses = Fight.objects.filter(**loss_filter)
 
-        if wins or losses:
-            win_rate = wins/(wins + losses)
-            results = {
-                'wins': wins,
-                'losses': losses,
-                'win_rate': "{0:.0f}%".format(win_rate * 100),
-                'win_size': win_rate * 100
-            }
-            return results
-        else:
-            return dict()
+        return wins, losses
