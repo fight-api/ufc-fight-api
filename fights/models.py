@@ -33,9 +33,11 @@ class Fighter(models.Model):
         """
         if self.dt_birthday:
             days = (d - self.dt_birthday).days
-            return days / 365
+            float_days = days / 365
+            int_days = int(float_days)
+            return float_days, int_days
         else:
-            return None
+            return None, None
 
     @property
     def fight_count(self):
@@ -118,8 +120,8 @@ class Fight(models.Model):
         fight.
         """
         d = self.event.dt_date
-        self.winner_age = self.winner.age_on_date(d)
-        self.loser_age = self.loser.age_on_date(d)
+        self.winner_age, self.winner_int_age = self.winner.age_on_date(d)
+        self.loser_age, self.loser_int_age = self.loser.age_on_date(d)
 
     def get_streak(self, fighter):
         """
