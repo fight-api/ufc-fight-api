@@ -160,13 +160,29 @@ class DataResults(TemplateView):
             **context,
             **results_average
         }
-        x = [-2,0,4,6,7]
-        y = [q**2-q+3 for q in x]
+
+        win_group = wins.order_by('winner_int_age').values('winner_int_age').annotate(w_count=Count('winner_int_age'))
+        loss_group = losses.order_by('loser_int_age').values('loser_int_age').annotate(l_count=Count('loser_int_age'))
+
+        loss_dict = {}
+        for loss in loss_group:
+            loss_dict[loss['loser_int_age']] = loss['l_count']
+
+        x = []
+        y = []
+        for group in win_group:
+            age = group['winner_int_age']
+            w_count = group['w_count']
+            l_count = loss_dict.get(age)
+            if l_count:
+                x.append(age)
+                y.append(w_count/(w_count + l_count))
+
         trace1 = go.Scatter(x=x, y=y, marker={'color': 'red', 'symbol': 104, 'size': "10"},
                             mode="lines",  name='1st Trace')
 
         data=go.Data([trace1])
-        layout=go.Layout(title="Win percentage by age", xaxis={'title':'x1'}, yaxis={'title':'x2'})
+        layout=go.Layout(title="Win percentage by age", xaxis={'title':'Age'}, yaxis={'title':'Win %'})
         figure=go.Figure(data=data,layout=layout)
         div = opy.plot(figure, auto_open=False, output_type='div')
 
