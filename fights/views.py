@@ -78,6 +78,7 @@ class EventDetail(generics.RetrieveAPIView):
 
 
 class RefereeSummary(APIView):
+    permission_classes = (IsAuthenticated,)
 
     def get(self, request, format=None):
         data = Fight.objects.values('referee').annotate(
@@ -86,6 +87,7 @@ class RefereeSummary(APIView):
 
 
 class FinishSummary(APIView):
+    permission_classes = (IsAuthenticated,)
     def get(self, request, format=None):
         data = Fight.objects.values('method').annotate(
             number=Count('pk')).order_by('-number')
