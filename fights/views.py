@@ -177,15 +177,16 @@ class DataResults(TemplateView):
             if l_count:
                 x.append(age)
                 y.append(w_count/(w_count + l_count))
+        if x and y:
 
-        trace1 = go.Scatter(x=x, y=y, marker={'color': 'red', 'symbol': 104, 'size': "10"},
-                            mode="lines",  name='1st Trace')
+            trace1 = go.Scatter(x=x, y=y, marker={'color': 'red', 'symbol': 104, 'size': "10"},
+                                mode="lines",  name='1st Trace')
 
-        data=go.Data([trace1])
-        layout=go.Layout(title="Win percentage by age", xaxis={'title':'Age'}, yaxis={'title':'Win %'})
-        figure=go.Figure(data=data,layout=layout)
-        div = opy.plot(figure, auto_open=False, output_type='div')
+            data=go.Data([trace1])
+            layout=go.Layout(title="Win percentage by age", xaxis={'title':'Age'}, yaxis={'title':'Win %'})
+            figure=go.Figure(data=data,layout=layout)
+            div = opy.plot(figure, auto_open=False, output_type='div')
 
-        context['graph'] = div
+            context['graph'] = div
 
         return context
