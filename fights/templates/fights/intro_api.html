@@ -4,10 +4,9 @@
 {#<div class="mainContent">#}
     <div class="opening">
         <p>
-        Hello and welcome to MMAAPI, a REST API for Mixed Martial Arts data.
-        If you aren't sure what that means, don't worry. An API is just a way
-        for computer programs to communicate and share information. If you just
-        want to see the data you can do so in your browser.
+            Hello and welcome to MMA API, a collection of Mixed Martial Arts data. This is a project to collect and analyze
+            fight statistics and take a Moneyball-type approach to the sport.
+
         </p>
     </div>
 
@@ -18,8 +17,7 @@
         <p>As a huge fan of both MMA and sports analytics I have often wondered
             about things like "How well do fighters age?" and "Does a high
             finish rate predict future success?". After looking and not finding
-            a good dataset to work with I decided to make my own
-            and put an API on it so others can use it too.
+            a good dataset to work with I decided to make my own.
         </p>
 
         <p>
@@ -36,31 +34,21 @@
     <div>
         <p><h3>How does it work?</h3></p>
         <p>
-            The data is accessed through a typical REST format. I'll explain what that means but
-            if you are familiar with that structure you might want to head straight to the
-            <a href="http://www.mmaapi.com/docs/">Swagger Docs</a> which break down all of the API endpoints.
-
-
+            Head on over to the <a href="{% url 'data_explorer' %}">Data Explorer</a> page to play around with it. There
+            you can select certain fighter traits to see how often they win, both on average and broken down by age. For
+            a simple example enter ages 20 - 35 to see how win rates change over time. More ways of analyzing and
+            visualizing the data is on the way.
         </p>
 
         <p>
-            All of the data is accessed from www.mmaapi.com/api/ + whatever type of data you want.
-            Make a GET request through code or your browser to
-            <a href="{% url 'fighter_list' %}"><span class="codeBox">www.mmaapi.com/api/fighter/</span>     </a>
-            and you will get a json object with a list of fighters and their id numbers. Add an id number to the url
-            and will get more detailed information about that specific fighter.
+            There is plenty more data to work with, which I have exposed through a REST API. Check out the
+            <a href="/docs/">Swagger API Docs</a> to get a sense of what is there. Feel free to contact me if you would
+            like access to the data.
         </p>
 
         <p>
-            For example the id for Amanda Nunes is 486.
-            <a href="{% url 'fighter_detail' 486 %}"><span class="codeBox">www.mmaapi.com/fighter/486/</span></a> returns an object with
-            her bio information, all of her won and lost fights, and some career statistics.
-        </p>
-
-        <p>
-            The same can be done for fights. <a href="{% url 'fight_list' %}"><span class="codeBox">www.mmaapi.com/fight/</span></a>
-            returns a list of events and <a href="{% url 'fight_detail' 2335 %}"><span class="codeBox">www.mmaapi.com/fight/2335/</span></a>
-            returns the following object:
+            As an example of one fight <a href="{% url 'fight_detail' 2335 %}"><span class="codeBox">www.mmaapi.com/fight/2335/</span></a>
+            returns the following JSON object:
             <span class="codeBox">
             <pre>
                 <code class="codeResponse">
@@ -70,14 +58,16 @@
                 </span>
         </p>
 
-        <p>
-            This works for <a href="{% url 'event_list' %}"><span class="codeBox">events</span></a>
-            and any other resource in the database.
-            Check out the docs page for complete documentation.
 
-        </p>
+    </div>
 
-
+    <hr>
+    <div>
+    <p><h3>Are there any errors in the data?</h3></p>
+    <p>
+        Almost for sure! Collecting real world information and creating data features is often a tricky process. I have
+        done my best to keep everything accurate but there could be a few fights or the occasional field missing.
+    </p>
     </div>
 
     <hr>
@@ -85,9 +75,11 @@
     <div class="bottom-section">
         <p><h3>Feedback</h3></p>
         <p>
-            The code can be viewed on <a href="https://github.com/fight-api">Github</a>.
-            Feel free to open an issue or email me through my profile there with any questions or suggestions you have.
-            I'd love to discuss interesting use cases for the data or ways the information could be expanded.
+            The code can be viewed on <a href="https://github.com/fight-api">Github</a> and collaborations are welcome.
+            Feel free to open an issue or email me with any questions or suggestions you have. My email is listed on my
+            <a href="https://github.com/AaronScruggs">GitHub profile</a>.
+            I'd love to discuss interesting use cases for the data or ways the information could be expanded. If you
+            would like access to the API for a separate project shoot me an email and I will get you an API key.
         </p>
     </div>
 
