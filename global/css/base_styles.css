@@ -20,6 +20,8 @@ a:hover {
 hr {
     width: 60%;
     margin-top: 23px;
+    height: 1px;
+    background-color: #3f3f3f;
 }
 
 ul {
