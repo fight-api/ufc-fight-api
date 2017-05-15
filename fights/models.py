@@ -192,15 +192,18 @@ class FightQuery(models.Model):
 
     def __str__(self):
         values = []
-        if self.win_loss_streak:
+        if self.win_loss_streak is not None:
             values.append('Streak: {}'.format(self.win_loss_streak))
-        if self.min_age or self.max_age:
+        if self.min_age is not None or self.max_age is not None:
             values.append('Age: {}-{}'.format(self.min_age, self.max_age))
-        if self.min_experience or self.max_experience:
+        if self.min_experience is not None or self.max_experience is not None:
             values.append('Exp: {}-{}'.format(self.min_experience, self.max_experience))
 
-        value = ', '.join(values)
-        return value.replace('None', 'any')
+        if values:
+            value = ', '.join(values)
+            return value.replace('None', 'any')
+        else:
+            return 'All of them'
 
     def get_query_filters(self):
         query_filters = {
@@ -210,7 +213,7 @@ class FightQuery(models.Model):
             'experience__gte': self.min_experience,
             'experience__lte': self.max_experience
         }
-        return {k:v for k,v in query_filters.items() if v}
+        return {k:v for k,v in query_filters.items() if v is not None}
 
     def get_wins_losses(self):
 
