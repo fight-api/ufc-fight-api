@@ -24,15 +24,6 @@
 
 <div>
 
-{#<nav class="banner">#}
-{#    <div class="bannerContainer">#}
-{#        <span class="bannerText">#}
-{#            MMA API#}
-{#        </span>#}
-{##}
-{#    </div>#}
-{##}
-{#</nav>#}
  <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
@@ -52,6 +43,8 @@
     </div>
   </div>
 </nav>
+
+<div class="row content">
 <div class="col-md-2">
 {% if recent_searches %}
 
@@ -69,6 +62,14 @@
         {% endblock %}
 </div>
 <div class="col-md-2"></div>
+</div>
+
+<div class="row footer">
+    <div class="col-s-12">
+    <p></p>
+    </div>
+  </div>
+
 </div>
 
 <script>

@@ -24,6 +24,10 @@ hr {
     background-color: #3f3f3f;
 }
 
+.footer {
+    height: 10%;
+}
+
 ul {
     list-style: None;
 }
