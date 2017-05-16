@@ -3,6 +3,7 @@
     padding-right: 10px;
 }
 
+
 .mainContent div {
     padding-left: 10px;
     padding-right: 10px;
@@ -48,14 +49,18 @@ ul {
 }
 
 .background {
-    background-color: #847C6F;
+    /*background-color: #847C6F;*/
     padding: 0px;
     margin: 0px;
     font-family:Tahoma, serif;
+    background-color: #000000;
+    /*background-image: url(http://www.transparenttextures.com/patterns/concrete-wall-2.png);*/
 }
 
 .mainContent {
     background-color: #F0EEE1;
+    box-shadow: 10px 10px 5px rgb(70, 70, 70);
+    /*background-color: ;*/
     /*margin-left: 12%;*/
     /*margin-right: 12%;*/
 }
