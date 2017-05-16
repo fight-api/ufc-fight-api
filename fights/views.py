@@ -172,6 +172,7 @@ class DataResults(TemplateView):
 
         x = []
         y = []
+        y2 = []
         for group in win_group:
             age = group['winner_int_age']
             w_count = group['w_count']
@@ -179,12 +180,25 @@ class DataResults(TemplateView):
             if l_count:
                 x.append(age)
                 y.append(w_count/(w_count + l_count))
+                y2.append((w_count + l_count) / 1000)
         if x and y:
 
-            trace1 = go.Scatter(x=x, y=y, marker={'color': 'red', 'symbol': 104, 'size': "10"},
-                                mode="lines",  name='1st Trace')
-
-            data=go.Data([trace1])
+            trace1 = go.Scatter(
+                x=x,
+                y=y,
+                marker={'color': 'red', 'symbol': 104, 'size': "10"},
+                # fill='tozeroy',
+                mode='lines',
+                name='Win rate'
+            )
+            trace2 = go.Scatter(
+                x=x,
+                y=y2,
+                fill='tozeroy',
+                mode='none',
+                name='fight count / 1000'
+            )
+            data=go.Data([trace1, trace2])
             layout=go.Layout(title="Win percentage by age", xaxis={'title':'Age'}, yaxis={'title':'Win %'})
             figure=go.Figure(data=data,layout=layout)
             div = opy.plot(figure, auto_open=False, output_type='div')
