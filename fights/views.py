@@ -187,7 +187,6 @@ class DataResults(TemplateView):
                 x=x,
                 y=y,
                 marker={'color': 'red', 'symbol': 104, 'size': "10"},
-                # fill='tozeroy',
                 mode='lines',
                 name='Win rate'
             )
