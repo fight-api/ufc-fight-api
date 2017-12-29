@@ -222,13 +222,13 @@ class FightQuery(models.Model):
             'experience__gte': self.min_experience,
             'experience__lte': self.max_experience
         }
-        return {k:v for k,v in query_filters.items() if v is not None}
+        return {k: v for k, v in query_filters.items() if v is not None}
 
     def get_wins_losses(self):
 
         query_filters = self.get_query_filters()
-        win_filter = {'winner_{}'.format(k): v for k,v in query_filters.items()}
-        loss_filter = {'loser_{}'.format(k): v for k,v in query_filters.items()}
+        win_filter = {'winner_{}'.format(k): v for k, v in query_filters.items()}
+        loss_filter = {'loser_{}'.format(k): v for k, v in query_filters.items()}
 
         wins = Fight.objects.filter(**win_filter)
         losses = Fight.objects.filter(**loss_filter)
