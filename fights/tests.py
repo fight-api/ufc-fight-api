@@ -7,27 +7,119 @@ from fights.models import Fighter, Fight, Event, FightQuery
 class FighterModelTests(TestCase):
 
     def setUp(self):
-        fighter1 = Fighter.objects.create(
+        self.fighter1 = Fighter.objects.create(
             name='f1',
             dt_birthday=datetime.datetime(1990, 1, 1),
             birthday='January 1st, 1990',
             height="5' 10",
             weight='170 lbs',
-            sh_rul='test.com'
+            sh_url='test.com/1'
+        )
+        self.fighter2 = Fighter.objects.create(
+            name='f2',
+            dt_birthday=datetime.datetime(1992, 6, 6),
+            birthday='June 6th, 1992',
+            height="5' 11",
+            weight='170 lbs',
+            sh_url='test.com/2'
+        )
+        self.event1 = Event.objects.create(
+            title='event1',
+            organization='org',
+            date_string='Feb 2 2016',
+            dt_date=datetime.datetime(2016, 2, 1),
+            location='Las Vegas'
+        )
+        self.event2 = Event.objects.create(
+            title='event2',
+            organization='org',
+            date_string='March 2 2016',
+            dt_date=datetime.datetime(2016, 3, 1),
+            location='Las Vegas'
+        )
+        self.event3 = Event.objects.create(
+            title='event3',
+            organization='org',
+            date_string='April 2 2016',
+            dt_date=datetime.datetime(2016, 4, 1),
+            location='Las Vegas'
+        )
+        self.fight1 = Fight.objects.create(
+            winner=self.fighter1,
+            winner_name=self.fighter1.name,
+            winner_url=self.fighter1.sh_url,
+            loser=self.fighter2,
+            loser_name=self.fighter2.name,
+            loser_url=self.fighter2.sh_url,
+            event=self.event1,
+            method='ko',
+            referee='Herb Dean',
+            round='1',
+            time='2.53'
+        )
+        self.fight2 = Fight.objects.create(
+            winner=self.fighter1,
+            winner_name=self.fighter1.name,
+            winner_url=self.fighter1.sh_url,
+            loser=self.fighter2,
+            loser_name=self.fighter2.name,
+            loser_url=self.fighter2.sh_url,
+            event=self.event2,
+            method='decision',
+            referee='Herb Dean',
+            round='3',
+            time='5.00'
+        )
+        self.fight3 = Fight.objects.create(
+            winner=self.fighter2,
+            winner_name=self.fighter2.name,
+            winner_url=self.fighter2.sh_url,
+            loser=self.fighter1,
+            loser_name=self.fighter1.name,
+            loser_url=self.fighter1.sh_url,
+            event=self.event3,
+            method='submission',
+            referee='Herb Dean',
+            round='2',
+            time='2.53'
         )
 
     def test_fights_on_date(self):
-        pass
+        before = datetime.datetime(2015, 1, 1)
+        before_count = self.fighter1.fights_on_date(before)
+        after = datetime.datetime(2017, 1, 1)
+        after_count = self.fighter2.fights_on_date(after)
+        one_fight_date = datetime.datetime(2016, 2, 15)
+        one_count = self.fighter1.fights_on_date(one_fight_date)
 
-    def test_age_on_date(self):
-        pass
+        self.assertEqual(before_count, 0)
+        self.assertEqual(after_count, 3)
+        self.assertEqual(one_count, 1)
+
+    def test_int_age_on_date(self):
+        d1 = datetime.datetime(2016, 1, 2)
+        d2 = datetime.datetime(2016, 5, 30)
+        d3 = datetime.datetime(2016, 11, 30)
+        d4 = datetime.datetime(1992, 7, 1)
+
+        self.assertEqual(self.fighter1.age_on_date(d1)[1], 26)
+        self.assertEqual(self.fighter1.age_on_date(d2)[1], 26)
+        self.assertEqual(self.fighter1.age_on_date(d3)[1], 26)
+        self.assertEqual(self.fighter1.age_on_date(d4)[1], 2)
+
+        self.assertEqual(self.fighter2.age_on_date(d1)[1], 23)
+        self.assertEqual(self.fighter2.age_on_date(d2)[1], 23)
+        self.assertEqual(self.fighter2.age_on_date(d3)[1], 24)
+        self.assertEqual(self.fighter2.age_on_date(d4)[1], 0)
 
     def test_fight_count(self):
-        pass
+        self.assertEqual(self.fighter1.fight_count, 3)
+        self.assertEqual(self.fighter2.fight_count, 3)
 
     def test_decision_rate(self):
-        pass
+        self.assertEqual(self.fighter1.decision_rate, 1/3)
+        self.assertEqual(self.fighter2.decision_rate, 1/3)
 
     def test_finish_rate(self):
-        pass
-
+        self.assertEqual(self.fighter1.finish_rate, 2/3)
+        self.assertEqual(self.fighter2.finish_rate, 2/3)

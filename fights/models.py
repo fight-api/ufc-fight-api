@@ -68,7 +68,11 @@ class Fighter(models.Model):
         """
         :return: The rate (from 0 to 1) that their fights result in a finish.
         """
-        return 1 - self.decision_rate
+        finishes = self.winners.exclude(
+            method__icontains='Decision').count() + self.losers.exclude(
+            method__icontains='Decision'
+        ).count()
+        return finishes / self.fight_count
 
     def __str__(self):
         return self.name
