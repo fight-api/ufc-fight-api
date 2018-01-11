@@ -234,18 +234,27 @@ class FightModelTests(TestCase):
         self.assertEqual(self.fight3.get_streak(self.fighter1), 2)
         self.assertEqual(self.fight3.get_streak(self.fighter2), -2)
 
-
-    def test_set_fighter_streaks(self):
-        pass
-
     def test_calc_stats(self):
         # Set new values to get different results from initial save
-        pass
+        self.fight3.method = 'majority draw'
+        self.fight3.event.dt_date = datetime.datetime(2001, 1, 1)
+        self.fight3.winner.dt_birthday = datetime.datetime(1990, 1, 1)
+        self.fight3.loser.dt_birthday = datetime.datetime(1991, 1, 1)
+        self.fight3.calc_stats()
+
+        self.assertEqual(self.fight3.finish_type, 'draw')
+        self.assertEqual(self.fight3.winner_experience, 0)
+        self.assertEqual(self.fight3.loser_experience, 0)
+        self.assertEqual(self.fight3.winner_int_age, 11)
+        self.assertEqual(self.fight3.loser_int_age, 10)
+        self.assertEqual(self.fight3.winner_streak, 0)
+        self.assertEqual(self.fight3.loser_streak, 0)
 
     def test_str(self):
         pass
 
     def test_unique_together(self):
+        # assert error for non-unique
         pass
 
 
