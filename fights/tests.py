@@ -1,3 +1,4 @@
+from django.db import IntegrityError
 from django.test import TestCase
 import datetime
 
@@ -251,14 +252,111 @@ class FightModelTests(TestCase):
         self.assertEqual(self.fight3.loser_streak, 0)
 
     def test_str(self):
-        pass
+        self.assertEqual(str(self.fight1), 'f1 defeated f2')
 
     def test_unique_together(self):
         # assert error for non-unique
-        pass
-
-
+        with self.assertRaises(IntegrityError):
+            Fight.objects.create(winner=self.fighter1, loser=self.fighter2, event=self.event1)
 
 
 class FightQueryModelTests(TestCase):
-    pass
+    def setUp(self):
+        self.fighter1 = Fighter.objects.create(
+            name='f1',
+            dt_birthday=datetime.datetime(1990, 1, 1),
+            birthday='January 1st, 1990',
+            height="5' 10",
+            weight='170 lbs',
+            sh_url='test.com/1'
+        )
+        self.fighter2 = Fighter.objects.create(
+            name='f2',
+            dt_birthday=datetime.datetime(1992, 6, 6),
+            birthday='June 6th, 1992',
+            height="5' 11",
+            weight='170 lbs',
+            sh_url='test.com/2'
+        )
+        self.event1 = Event.objects.create(
+            title='event1',
+            organization='org',
+            date_string='Feb 2 2016',
+            dt_date=datetime.datetime(2016, 2, 1),
+            location='Las Vegas'
+        )
+        self.event2 = Event.objects.create(
+            title='event2',
+            organization='org',
+            date_string='March 2 2016',
+            dt_date=datetime.datetime(2016, 3, 1),
+            location='Las Vegas'
+        )
+        self.event3 = Event.objects.create(
+            title='event3',
+            organization='org',
+            date_string='April 2 2016',
+            dt_date=datetime.datetime(2016, 4, 1),
+            location='Las Vegas'
+        )
+        self.fight1 = Fight.objects.create(
+            winner=self.fighter1,
+            winner_name=self.fighter1.name,
+            winner_url=self.fighter1.sh_url,
+            loser=self.fighter2,
+            loser_name=self.fighter2.name,
+            loser_url=self.fighter2.sh_url,
+            event=self.event1,
+            method='technical ko',
+            referee='Herb Dean',
+            round='1',
+            time='2.53'
+        )
+        self.fight2 = Fight.objects.create(
+            winner=self.fighter1,
+            winner_name=self.fighter1.name,
+            winner_url=self.fighter1.sh_url,
+            loser=self.fighter2,
+            loser_name=self.fighter2.name,
+            loser_url=self.fighter2.sh_url,
+            event=self.event2,
+            method='split decision',
+            referee='Herb Dean',
+            round='3',
+            time='5.00'
+        )
+        self.fight3 = Fight.objects.create(
+            winner=self.fighter2,
+            winner_name=self.fighter2.name,
+            winner_url=self.fighter2.sh_url,
+            loser=self.fighter1,
+            loser_name=self.fighter1.name,
+            loser_url=self.fighter1.sh_url,
+            event=self.event3,
+            method='submission',
+            referee='Herb Dean',
+            round='2',
+            time='2.53'
+        )
+
+    def test_get_query_filters(self):
+        self.fight_query1 = FightQuery(min_age=20, max_age=40)
+        self.assertDictEqual(
+            self.fight_query1.get_query_filters(),
+            {'age__gte': 20, 'age__lte': 40})
+
+        self.fight_query1.win_loss_streak = 1
+        self.assertDictEqual(self.fight_query1.get_query_filters(),
+                             {'age__gte': 20, 'age__lte': 40, 'streak': 1})
+
+        self.fight_query1.min_experience = 1
+        self.fight_query1.max_experience = 12
+
+        self.assertDictEqual(self.fight_query1.get_query_filters(),
+                             {'age__gte': 20, 'age__lte': 40, 'streak': 1, 'experience__gte': 1, 'experience__lte': 12})
+
+
+    def test_get_wins_losses(self):
+        # Test streak, age, experience
+        ## Get wins and losses for each, can use age to get unbalanced results
+        pass
